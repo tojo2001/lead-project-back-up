@@ -8,19 +8,32 @@ import Preview from "../preview";
 import { dataToCSVFormat } from "@/utils/data-to-csv-format";
 import ClientDropdownMenu from "./client-dropdown-menu";
 import { RotateCw } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function LeadForm() {
   const [section, setSection] = useState<TSection | null>(null);
   const [clientkey, setClientkey] = useState<TClients | null>(null);
   const [leads, setLeads] = useState("");
   const [result, setResult] = useState<Record<string, string>[] | null>(null);
+  const [pending, setPending] = useState(false);
+  const { toast } = useToast();
 
   const onPriview = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const leadsArray = await formatAction(section!, clientkey!, leads);
+    setPending(true);
 
-    setResult(leadsArray);
+    try {
+      const leadsArray = await formatAction(section!, clientkey!, leads);
+
+      setResult(leadsArray);
+    } catch (error) {
+      toast({
+        title: "Something went wrong try again",
+      });
+    } finally {
+      setPending(false);
+    }
   };
 
   const onReset = () => {
@@ -51,6 +64,7 @@ export default function LeadForm() {
         <Preview
           hasResult={!!result?.length}
           asSCVText={dataToCSVFormat(result)}
+          pending={pending}
         >
           <Button type="submit" disabled={!section || !clientkey || !leads}>
             Preview
