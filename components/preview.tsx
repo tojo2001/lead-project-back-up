@@ -4,10 +4,15 @@ import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Textarea } from "./ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 type TProps = {
   children: React.ReactNode;
@@ -31,26 +36,33 @@ export default function Preview({ children, hasResult, asSCVText }: TProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
+
       <DialogContent>
         <DialogHeader>
           <DialogTitle>CSV Preview</DialogTitle>
-          {hasResult ? (
-            <DialogContent className="w-full">
-              <div className="relative border rounded-md overflow-auto p-2 w-full h-60">
-                {asSCVText}
-                <Button
-                  size="icon"
-                  className="absolute top-2 right-2 z-10"
-                  onClick={onCopy}
-                >
-                  {!isCopy ? <ClipboardCopy /> : <ClipboardCheck />}
-                </Button>
-              </div>
-            </DialogContent>
-          ) : (
-            <DialogContent>No content</DialogContent>
-          )}
         </DialogHeader>
+        <div>
+          {hasResult ? (
+            <div className="relative">
+              <Textarea
+                value={asSCVText ?? ""}
+                className="h-56 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
+                autoFocus={false}
+                onChange={() => null}
+              />
+
+              <Button
+                size="icon"
+                className="absolute bottom-2 right-2 z-10"
+                onClick={onCopy}
+              >
+                {!isCopy ? <ClipboardCopy /> : <ClipboardCheck />}
+              </Button>
+            </div>
+          ) : (
+            <p>No content</p>
+          )}
+        </div>
       </DialogContent>
     </Dialog>
   );
