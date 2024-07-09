@@ -26,7 +26,11 @@ export default function LeadForm() {
     setPending(true);
 
     try {
-      const leadsArray = await formatAction(section!, clientkey!, leads);
+      const leadsArray = (await formatAction(
+        section!,
+        clientkey!,
+        leads
+      )) as IDataContact[];
 
       setResult(leadsArray);
     } catch (error) {
