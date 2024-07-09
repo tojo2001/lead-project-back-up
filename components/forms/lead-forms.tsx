@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { formatAction } from "@/actions/format.action";
@@ -9,14 +9,16 @@ import { dataToCSVFormat } from "@/utils/data-to-csv-format";
 import ClientDropdownMenu from "./client-dropdown-menu";
 import { RotateCw } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { pushContactAction } from "@/actions/push-contact.action";
 
 export default function LeadForm() {
   const [section, setSection] = useState<TSection | null>(null);
   const [clientkey, setClientkey] = useState<TClients | null>(null);
   const [leads, setLeads] = useState("");
-  const [result, setResult] = useState<Record<string, string>[] | null>(null);
+  const [result, setResult] = useState<IDataContact[] | null>(null);
   const [pending, setPending] = useState(false);
   const { toast } = useToast();
+  const closeBtnRef = useRef<HTMLButtonElement | null>(null);
 
   const onPriview = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,6 +45,32 @@ export default function LeadForm() {
     setResult(null);
   };
 
+  const onPush = async () => {
+    const authToken = prompt("Authorization token");
+
+    if (!result || !authToken) return;
+
+    try {
+      const response = await pushContactAction({
+        authToken,
+        dataContacts: result,
+        campaignSettingId: "test",
+      });
+
+      toast({
+        title: "Pushed to MERE",
+      });
+
+      console.log(response);
+
+      closeBtnRef.current?.click();
+    } catch (error: any) {
+      toast({
+        title: error.message ?? "Something went wrong try again",
+      });
+    }
+  };
+
   return (
     <form className="space-y-2 w-[22rem]" onSubmit={onPriview}>
       <ClientDropdownMenu
@@ -65,6 +93,8 @@ export default function LeadForm() {
           hasResult={!!result?.length}
           asSCVText={dataToCSVFormat(result)}
           pending={pending}
+          onPush={onPush}
+          closeBtnRef={closeBtnRef}
         >
           <Button type="submit" disabled={!section || !clientkey || !leads}>
             Preview

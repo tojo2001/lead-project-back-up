@@ -1,5 +1,5 @@
 export function dataToCSVFormat(
-  data: Record<string, string>[] | null
+  data: IDataContact[] | null | null
 ): string | null {
   if (!data) {
     return null;

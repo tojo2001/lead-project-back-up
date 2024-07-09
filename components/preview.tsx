@@ -1,9 +1,11 @@
 import { ClipboardCheck, ClipboardCopy, LoaderCircle } from "lucide-react";
 import { Button } from "./ui/button";
-import { useEffect, useState } from "react";
+import { MutableRefObject, useEffect, useState } from "react";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -15,6 +17,8 @@ type TProps = {
   hasResult: boolean;
   asSCVText: string | null;
   pending: boolean;
+  onPush: () => Promise<void>;
+  closeBtnRef: MutableRefObject<HTMLButtonElement | null>;
 };
 
 export default function Preview({
@@ -22,6 +26,8 @@ export default function Preview({
   hasResult,
   asSCVText,
   pending,
+  onPush,
+  closeBtnRef,
 }: TProps) {
   const [isCopy, setIsCopy] = useState(false);
 
@@ -58,7 +64,8 @@ export default function Preview({
 
                 <Button
                   size="icon"
-                  className="absolute bottom-2 right-2 z-10"
+                  variant="secondary"
+                  className="absolute top-2 right-2 z-10"
                   onClick={onCopy}
                 >
                   {!isCopy ? <ClipboardCopy /> : <ClipboardCheck />}
@@ -69,6 +76,17 @@ export default function Preview({
             )}
           </div>
         )}
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button type="button" variant="secondary" ref={closeBtnRef}>
+              Close
+            </Button>
+          </DialogClose>
+
+          <Button variant="destructive" onClick={onPush}>
+            Proceed to Push
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

@@ -111,22 +111,46 @@ export async function formatAction(
   }
 
   // "ENERGIE"
-  else {
+  else if (section === "ENERGIE") {
     switch (key) {
-      case "ADM":
-        return null;
+      case "ADM TOTAL":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnADMTOTAL(lead.split(LEAD_SEPARATOR))
+        );
 
-      case "VIPP":
-        return null;
+      case "ADM VATTENFALL":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnADMVATTENFALL(
+            lead.split(LEAD_SEPARATOR)
+          )
+        );
 
-      case "EUROCRM":
-        return null;
+      case "AFFINICIA TOTAL":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnAFFINICIATOTAL(
+            lead.split(LEAD_SEPARATOR)
+          )
+        );
 
-      case "AFFINICIA":
-        return null;
+      case "ENGIE":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnENGIE(lead.split(LEAD_SEPARATOR))
+        );
+
+      case "WEKIWI":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnWEKIWI(lead.split(LEAD_SEPARATOR))
+        );
+
+      case "ENI":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnENI(lead.split(LEAD_SEPARATOR))
+        );
 
       default:
         return null;
     }
   }
+
+  return null;
 }
