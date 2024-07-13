@@ -4,26 +4,34 @@ import { FormEvent, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { formatAction } from "@/actions/format.action";
-import Preview from "../preview";
+import Preview from "../preview/preview";
 import { dataToCSVFormat } from "@/utils/data-to-csv-format";
 import ClientDropdownMenu from "./client-dropdown-menu";
 import { RotateCw } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { pushContactAction } from "@/actions/push-contact.action";
+import { useAuthStore } from "@/store/use-auth.store";
 
 export default function LeadForm() {
+  const { authToken } = useAuthStore();
   const [section, setSection] = useState<TSection | null>(null);
   const [clientkey, setClientkey] = useState<TClients | null>(null);
   const [leads, setLeads] = useState("");
-  const [result, setResult] = useState<IDataContact[] | null>(null);
-  const [pending, setPending] = useState(false);
+  const [dataContact, setDataContact] = useState<IDataContact[] | null>(null);
+  const [pending, setPending] = useState({
+    formatting: false,
+    processing: false,
+  });
   const { toast } = useToast();
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
 
-  const onPriview = async (e: FormEvent<HTMLFormElement>) => {
+  const onPreview = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setPending(true);
+    setPending((state) => ({
+      ...state,
+      formatting: true,
+    }));
 
     try {
       const leadsArray = (await formatAction(
@@ -32,13 +40,16 @@ export default function LeadForm() {
         leads
       )) as IDataContact[];
 
-      setResult(leadsArray);
+      setDataContact(leadsArray);
     } catch (error) {
       toast({
         title: "Something went wrong try again",
       });
     } finally {
-      setPending(false);
+      setPending((state) => ({
+        ...state,
+        formatting: false,
+      }));
     }
   };
 
@@ -46,18 +57,21 @@ export default function LeadForm() {
     setSection(null);
     setClientkey(null);
     setLeads("");
-    setResult(null);
+    setDataContact(null);
   };
 
   const onPush = async () => {
-    const authToken = prompt("Authorization token");
+    if (!dataContact || !authToken) return;
 
-    if (!result || !authToken) return;
+    setPending((state) => ({
+      ...state,
+      processing: true,
+    }));
 
     try {
       const response = await pushContactAction({
         authToken,
-        dataContacts: result,
+        dataContacts: dataContact,
         campaignSettingId: "test",
       });
 
@@ -72,11 +86,16 @@ export default function LeadForm() {
       toast({
         title: error.message ?? "Something went wrong try again",
       });
+    } finally {
+      setPending((state) => ({
+        ...state,
+        processing: false,
+      }));
     }
   };
 
   return (
-    <form className="space-y-2 w-[22rem]" onSubmit={onPriview}>
+    <form className="space-y-2 w-[22rem]" onSubmit={onPreview}>
       <ClientDropdownMenu
         clientkey={clientkey}
         setClientkey={setClientkey}
@@ -94,8 +113,8 @@ export default function LeadForm() {
 
       <div className="flex items-center space-x-2">
         <Preview
-          hasResult={!!result?.length}
-          asSCVText={dataToCSVFormat(result)}
+          hasResult={!!dataContact?.length}
+          asSCVText={dataToCSVFormat(dataContact)}
           pending={pending}
           onPush={onPush}
           closeBtnRef={closeBtnRef}
