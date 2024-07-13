@@ -2,6 +2,7 @@
 
 import { LEAD_SEPARATOR, LEAD_DEVIDER } from "@/constant/constant";
 import { mapColumnFn } from "@/utils/file-processing";
+import { generateNumericId } from "@/utils/id-generator";
 
 export async function formatAction(
   section: TSection,
@@ -9,10 +10,10 @@ export async function formatAction(
   leads: string
 ) {
   const leadsArray = leads
-    .replaceAll(",", ".")
-    .split(LEAD_DEVIDER)
-    .filter((i) => i != "")
-    .map((str) => str.replace(/\n/g, ""));
+    .replaceAll(",", ".") // Replace all commas with periods
+    .split(LEAD_DEVIDER) // Split leads by the lead separator
+    .filter((lead) => lead !== "") // Filter out empty leads
+    .map((str) => str.replace(/\n/g, "")); // Remove all line breaks
 
   // "BYTEL"
   if (section === "BYTEL") {

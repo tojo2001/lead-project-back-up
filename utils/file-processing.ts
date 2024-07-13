@@ -1,8 +1,11 @@
+import { generateNumericId } from "./id-generator";
+
 export const mapColumnFn = {
   BYTEL: {
     mapColumnADM: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -37,7 +40,8 @@ export const mapColumnFn = {
 
     mapColumnVIPP: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -73,7 +77,8 @@ export const mapColumnFn = {
 
     mapColumnEUROCRM: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -109,7 +114,8 @@ export const mapColumnFn = {
 
     mapColumnAFFINICIA: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -144,7 +150,8 @@ export const mapColumnFn = {
 
     mapColumnATLAS: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -180,7 +187,8 @@ export const mapColumnFn = {
 
     mapColumnFEDALA: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -216,7 +224,8 @@ export const mapColumnFn = {
 
     mapColumnMARINA: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -252,7 +261,8 @@ export const mapColumnFn = {
 
     mapColumnRIGHTPLACE: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -288,7 +298,8 @@ export const mapColumnFn = {
 
     mapColumnWEBHELP: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -324,7 +335,8 @@ export const mapColumnFn = {
 
     mapColumnALGER: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -362,7 +374,8 @@ export const mapColumnFn = {
   ORANGE: {
     mapColumnARMATIS: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -398,7 +411,8 @@ export const mapColumnFn = {
 
     mapColumnTUNIS: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -434,7 +448,8 @@ export const mapColumnFn = {
 
     mapColumnDPI: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -470,7 +485,8 @@ export const mapColumnFn = {
 
     mapColumnKONECTA: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -506,7 +522,8 @@ export const mapColumnFn = {
 
     mapColumnSATEL: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -542,7 +559,8 @@ export const mapColumnFn = {
 
     mapColumnTERSEA: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -580,7 +598,8 @@ export const mapColumnFn = {
   ENERGIE: {
     mapColumnADMTOTAL: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -614,7 +633,8 @@ export const mapColumnFn = {
 
     mapColumnADMVATTENFALL: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -648,7 +668,8 @@ export const mapColumnFn = {
 
     mapColumnAFFINICIATOTAL: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -682,7 +703,8 @@ export const mapColumnFn = {
 
     mapColumnENGIE: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -716,7 +738,8 @@ export const mapColumnFn = {
 
     mapColumnWEKIWI: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
@@ -750,7 +773,8 @@ export const mapColumnFn = {
 
     mapColumnENI: (item: string[]) => {
       return {
-        id: item?.[0],
+        id: generateNumericId(11),
+
         created_time: item?.[1],
         ad_id: item?.[2],
         ad_name: item?.[3],
