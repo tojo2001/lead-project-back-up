@@ -21,12 +21,15 @@ type TPushResult = {
   total: number;
 };
 
+const ENDPOINT =
+  "https://api.omni.oppy.ai/api/6579b3f51331484de9ee7b23/push/contact?Type=JSON";
+
 export async function pushContactAction({
   authToken,
   campaignSettingId,
   dataContacts,
 }: TParams) {
-  const URL = process.env.API_URL!;
+  const URL = ENDPOINT;
 
   const data = {
     campaignSettingId,
