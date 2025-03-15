@@ -104,7 +104,7 @@ export default function LeadForm() {
       />
 
       <Textarea
-        placeholder="leads"
+        placeholder="The lead(s) pasted here will be transformed to type MERE."
         className="resize-none w-full"
         value={leads}
         disabled={!clientkey}

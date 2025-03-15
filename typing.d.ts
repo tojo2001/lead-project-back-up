@@ -1,27 +1,38 @@
-type TSection = "BYTEL" | "ORANGE" | "ENERGIE";
+type TSection = "BYTEL" | "ORANGE" | "SFR" | "FREE" | "ENERGIE";
 
 type TClients =
   // BYTEL
+  | "ADM DAKAR"
   | "ADM"
-  | "VIPP"
   | "EUROCRM"
-  | "AFFINICIA"
   | "ATLAS"
   | "FEDALA"
   | "MARINA"
-  | "RIGHTPLACE"
+  | "VIPP"
   | "WEBHELP"
   | "ALGER"
 
   // ORANGE
-  | "ARMATIS"
-  | "TUNIS"
+  | "ARMATIS" /* DISCONTINUED */
+  | "TUNIS" /* DISCONTINUED */
   | "DPI"
   | "KONECTA"
   | "SATEL"
   | "TERSEA"
 
-  // ENERGIE
+  // SFR
+  | "AFFINICIA" /* DISCONTINUED */
+  | "K SFR"
+  | "RIGHTPLACE"
+  | "W AGADIR"
+  | "W DAKAR"
+  | "W FES"
+  | "W MARRAKECH"
+
+  // FREE
+  | "PUREPREMIUM"
+
+  // ENERGIE: No type MERE
   | "ADM TOTAL"
   | "ADM VATTENFALL"
   | "AFFINICIA TOTAL"

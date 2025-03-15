@@ -11,20 +11,16 @@ export const CLIENTS: {
     section: "BYTEL",
     campagne: [
       {
+        name: "ADM DAKAR",
+        key: "ADM DAKAR",
+      },
+      {
         name: "ADM",
         key: "ADM",
       },
       {
-        name: "VIPP",
-        key: "VIPP",
-      },
-      {
         name: "EUROCRM",
         key: "EUROCRM",
-      },
-      {
-        name: "AFFINICIA",
-        key: "AFFINICIA",
       },
       {
         name: "ATLAS",
@@ -39,8 +35,8 @@ export const CLIENTS: {
         key: "MARINA",
       },
       {
-        name: "RIGHTPLACE",
-        key: "RIGHTPLACE",
+        name: "VIPP",
+        key: "VIPP",
       },
       {
         name: "WEBHELP",
@@ -56,14 +52,6 @@ export const CLIENTS: {
   {
     section: "ORANGE",
     campagne: [
-      {
-        name: "ARMATIS",
-        key: "ARMATIS",
-      },
-      {
-        name: "TUNIS",
-        key: "TUNIS",
-      },
       {
         name: "DPI",
         key: "DPI",
@@ -83,6 +71,47 @@ export const CLIENTS: {
     ],
   },
 
+  {
+    section: "SFR",
+    campagne: [
+      {
+        name: "K-SFR",
+        key: "K SFR",
+      },
+      {
+        name: "RIGHTPLACE",
+        key: "RIGHTPLACE",
+      },
+      {
+        name: "AGADIR",
+        key: "W AGADIR",
+      },
+      {
+        name: "DAKAR",
+        key: "W DAKAR",
+      },
+      {
+        name: "FES",
+        key: "W FES",
+      },
+      {
+        name: "MARRAKECH",
+        key: "W MARRAKECH",
+      },
+    ],
+  },
+
+  {
+    section: "FREE",
+    campagne: [
+      {
+        name: "PUREPREMIUM",
+        key: "PUREPREMIUM",
+      },
+    ],
+  },
+
+  // No type MERE
   {
     section: "ENERGIE",
     campagne: [

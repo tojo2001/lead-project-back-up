@@ -2,7 +2,6 @@
 
 import { LEAD_SEPARATOR, LEAD_DEVIDER } from "@/constant/constant";
 import { mapColumnFn } from "@/utils/file-processing";
-import { generateNumericId } from "@/utils/id-generator";
 
 export async function formatAction(
   section: TSection,
@@ -33,11 +32,6 @@ export async function formatAction(
           mapColumnFn?.[section].mapColumnEUROCRM(lead.split(LEAD_SEPARATOR))
         );
 
-      case "AFFINICIA":
-        return leadsArray.map((lead) =>
-          mapColumnFn?.[section].mapColumnAFFINICIA(lead.split(LEAD_SEPARATOR))
-        );
-
       case "ATLAS":
         return leadsArray.map((lead) =>
           mapColumnFn?.[section].mapColumnATLAS(lead.split(LEAD_SEPARATOR))
@@ -51,11 +45,6 @@ export async function formatAction(
       case "MARINA":
         return leadsArray.map((lead) =>
           mapColumnFn?.[section].mapColumnMARINA(lead.split(LEAD_SEPARATOR))
-        );
-
-      case "RIGHTPLACE":
-        return leadsArray.map((lead) =>
-          mapColumnFn?.[section].mapColumnRIGHTPLACE(lead.split(LEAD_SEPARATOR))
         );
 
       case "WEBHELP":
@@ -104,6 +93,64 @@ export async function formatAction(
       case "TERSEA":
         return leadsArray.map((lead) =>
           mapColumnFn?.[section].mapColumnTERSEA(lead.split(LEAD_SEPARATOR))
+        );
+
+      default:
+        return null;
+    }
+  }
+
+  // "SFR"
+  else if (section === "SFR") {
+    switch (key) {
+      case "AFFINICIA":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnAFFINICIA(lead.split(LEAD_SEPARATOR))
+        );
+
+      case "K SFR":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnRIGHTPLACE(lead.split(LEAD_SEPARATOR))
+        );
+
+      case "RIGHTPLACE":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnRIGHTPLACE(lead.split(LEAD_SEPARATOR))
+        );
+
+      case "W AGADIR":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnW_AGADIR(lead.split(LEAD_SEPARATOR))
+        );
+
+      case "W DAKAR":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnW_DAKAR(lead.split(LEAD_SEPARATOR))
+        );
+
+      case "W FES":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnW_FES(lead.split(LEAD_SEPARATOR))
+        );
+
+      case "W MARRAKECH":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnW_MARRAKECH(
+            lead.split(LEAD_SEPARATOR)
+          )
+        );
+
+      default:
+        return null;
+    }
+  }
+
+  // FREE
+  else if (section === "FREE") {
+    switch (key) {
+      case "PUREPREMIUM":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnPURPREMIUM(lead.split(LEAD_SEPARATOR))
         );
 
       default:
