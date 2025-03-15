@@ -8,9 +8,8 @@ export default function Home() {
           <text x="5" y="30" fill="white" font-size="36">
             Go to
             <tspan fill="none" stroke="white">
-              MERE
+              MERE 🚀
             </tspan>
-            !
           </text>
         </svg>
       </div>
