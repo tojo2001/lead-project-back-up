@@ -1,12 +1,16 @@
 import { Activity } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 import Link from "next/link";
+import { SignedIn, UserButton } from "@clerk/nextjs";
 
 export default function Navbar() {
   const date = new Date();
 
   return (
     <nav className="fixed w-full flex items-center justify-between md:justify-end p-2 space-x-4">
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
       <div className="grid">
         <Link
           href="/"
