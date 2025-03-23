@@ -11,6 +11,10 @@ export const CLIENTS: {
     section: "BYTEL",
     campagne: [
       {
+        name: "MASTER BYTEL",
+        key: "MASTER BYTEL",
+      },
+      {
         name: "ADM DAKAR",
         key: "ADM DAKAR",
       },
@@ -74,6 +78,10 @@ export const CLIENTS: {
   {
     section: "SFR",
     campagne: [
+      {
+        name: "MASTER SFR",
+        key: "MASTER SFR",
+      },
       {
         name: "K-SFR",
         key: "K SFR",

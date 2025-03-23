@@ -2,6 +2,7 @@ type TSection = "BYTEL" | "ORANGE" | "SFR" | "FREE" | "ENERGIE";
 
 type TClients =
   // BYTEL
+  | "MASTER BYTEL"
   | "ADM DAKAR"
   | "ADM"
   | "EUROCRM"
@@ -21,6 +22,7 @@ type TClients =
   | "TERSEA"
 
   // SFR
+  | "MASTER SFR"
   | "AFFINICIA" /* DISCONTINUED */
   | "K SFR"
   | "RIGHTPLACE"
