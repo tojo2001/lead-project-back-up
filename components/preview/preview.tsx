@@ -76,14 +76,14 @@ export default function Preview({
                       onChange={() => null}
                     />
 
-                    <Button
+                    {/* <Button
                       size="icon"
                       variant="secondary"
                       className="absolute top-2 right-2 z-10"
                       onClick={onCopy}
                     >
                       {!isCopy ? <ClipboardCopy /> : <ClipboardCheck />}
-                    </Button>
+                    </Button> */}
                   </div>
                 ) : (
                   <Textarea
@@ -106,9 +106,13 @@ export default function Preview({
             </Button>
           </DialogClose>
 
-          <Button onClick={onStepChange}>{step === 1 ? "Next" : "Prev"}</Button>
+          <Button onClick={onCopy}>
+            {!isCopy ? "Copy to clipboard" : "Copied"}
+          </Button>
 
-          {step === 2 && (
+          {/* <Button onClick={onStepChange}>{step === 1 ? "Next" : "Prev"}</Button> */}
+
+          {/* {step === 2 && (
             <Button
               type="submit"
               variant="destructive"
@@ -125,7 +129,7 @@ export default function Preview({
                 <p>Proceed to Push</p>
               )}
             </Button>
-          )}
+          )} */}
         </DialogFooter>
       </DialogContent>
     </Dialog>

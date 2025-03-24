@@ -1,11 +1,10 @@
 import { generateNumericId } from "./id-generator";
-// | "ADM DAKAR" | "ADM" | "EUROCRM" | "ATLAS" | "FEDALA" | "MARINA" | "VIPP" | "WEBHELP" | "ALGER" | "ARMATIS" | "TUNIS" | "DPI" | "KONECTA" | "SATEL" | "TERSEA" | "AFFINICIA" | "K SFR" | "RIGHTPLACE" | "W AGADIR" | "W DAKAR" | "W FES" | "W MARRAKECH" | "PUREPREMIUM"
 
 export const mapColumnFn = {
   BYTEL: {
-    mapColumnADM_DAKAR: (item: string[]) => {
+    mapColumnMASTER_BYTEL: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -19,30 +18,67 @@ export const mapColumnFn = {
         is_organic: item?.[10],
         platform: item?.[11],
 
-        email: item?.[19],
-        "e-mail": item?.[20],
-        TEL2: item?.[13],
-        Fournisseur_actuel: item?.[25],
-        CP: item?.[26],
-        Depuis: item?.[14],
-        Options: item?.[16],
-        Preference: item?.[17],
-        time2call: "",
-        Prix: item?.[37],
-        Recherche: item?.[41],
-        nom: item?.[39],
-        prenom: item?.[40],
-        Ville: "",
-        utm_device: item?.[42],
-        lead_device: item?.[43],
-        operateur_mobile: item?.[38],
+        email: item?.[12],
+        "e-mail": item?.[13],
+        TEL2: item?.[14],
+        Fournisseur_actuel: item?.[15],
+        CP: item?.[16],
+        Depuis: item?.[17],
+        Options: item?.[18],
+        Preference: item?.[19],
+        time2call: item?.[20],
+        Prix: item?.[21],
+        Recherche: item?.[22],
+        nom: item?.[23],
+        prenom: item?.[24],
+        Ville: item?.[25],
+        utm_device: item?.[26],
+        lead_device: item?.[27],
+        operateur_mobile: item?.[33],
+        is_internal: "true",
+      };
+    },
+
+    mapColumnADM_DAKAR: (item: string[]) => {
+      return {
+        id: generateNumericId(),
+
+        created_time: item?.[1],
+        ad_id: item?.[2],
+        ad_name: item?.[3],
+        adset_id: item?.[4],
+        adset_name: item?.[5],
+        campaign_id: item?.[6],
+        campaign_name: item?.[7],
+        form_id: item?.[8],
+        form_name: item?.[9],
+        is_organic: item?.[10],
+        platform: item?.[11],
+
+        email: item?.[12],
+        "e-mail": item?.[13],
+        TEL2: item?.[14],
+        Fournisseur_actuel: item?.[15],
+        CP: item?.[16],
+        Depuis: item?.[17],
+        Options: item?.[18],
+        Preference: item?.[19],
+        time2call: item?.[20],
+        Prix: item?.[21],
+        Recherche: item?.[22],
+        nom: item?.[23],
+        prenom: item?.[24],
+        Ville: item?.[25],
+        utm_device: item?.[26],
+        lead_device: item?.[27],
+        operateur_mobile: item?.[28],
         is_internal: "true",
       };
     },
 
     mapColumnADM: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -79,7 +115,7 @@ export const mapColumnFn = {
 
     mapColumnEUROCRM: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -116,7 +152,7 @@ export const mapColumnFn = {
 
     mapColumnATLAS: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -138,22 +174,22 @@ export const mapColumnFn = {
         Depuis: item?.[17],
         Options: item?.[18],
         Preference: item?.[19],
-        time2call: "",
+        time2call: item?.[20],
         Prix: item?.[21],
-        Recherche: "",
-        nom: "",
-        prenom: "",
-        Ville: "",
-        utm_device: "",
-        lead_device: "",
-        operateur_mobile: "",
+        Recherche: item?.[22],
+        nom: item?.[23],
+        prenom: item?.[24],
+        Ville: item?.[25],
+        utm_device: item?.[26],
+        lead_device: item?.[27],
+        operateur_mobile: item?.[28],
         is_internal: "true",
       };
     },
 
     mapColumnFEDALA: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -175,22 +211,22 @@ export const mapColumnFn = {
         Depuis: item?.[17],
         Options: item?.[18],
         Preference: item?.[19],
-        time2call: "",
+        time2call: item?.[20],
         Prix: item?.[21],
-        Recherche: "",
-        nom: "",
-        prenom: "",
-        Ville: "",
-        utm_device: "",
-        lead_device: "",
-        operateur_mobile: "",
+        Recherche: item?.[22],
+        nom: item?.[23],
+        prenom: item?.[24],
+        Ville: item?.[25],
+        utm_device: item?.[26],
+        lead_device: item?.[27],
+        operateur_mobile: item?.[28],
         is_internal: "true",
       };
     },
 
     mapColumnMARINA: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -212,22 +248,22 @@ export const mapColumnFn = {
         Depuis: item?.[17],
         Options: item?.[18],
         Preference: item?.[19],
-        time2call: "",
+        time2call: item?.[20],
         Prix: item?.[21],
-        Recherche: "",
-        nom: "",
-        prenom: "",
-        Ville: "",
-        utm_device: "",
-        lead_device: "",
-        operateur_mobile: "",
+        Recherche: item?.[22],
+        nom: item?.[23],
+        prenom: item?.[24],
+        Ville: item?.[25],
+        utm_device: item?.[26],
+        lead_device: item?.[27],
+        operateur_mobile: item?.[28],
         is_internal: "true",
       };
     },
 
     mapColumnVIPP: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -264,7 +300,7 @@ export const mapColumnFn = {
 
     mapColumnWEBHELP: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -288,20 +324,20 @@ export const mapColumnFn = {
         Preference: item?.[28],
         time2call: "",
         Prix: item?.[34],
-        Recherche: "",
-        nom: "",
-        prenom: "",
+        Recherche: item?.[43],
+        nom: item?.[41],
+        prenom: item?.[42],
         Ville: "",
-        utm_device: "",
+        utm_device: item?.[43],
         lead_device: "",
-        operateur_mobile: "",
+        operateur_mobile: item?.[37],
         is_internal: "true",
       };
     },
 
     mapColumnALGER: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -325,6 +361,230 @@ export const mapColumnFn = {
         Preference: item?.[20],
         time2call: "",
         Prix: item?.[28],
+        Recherche: item?.[31],
+        nom: item?.[32],
+        prenom: item?.[33],
+        Ville: "",
+        utm_device: item?.[35],
+        lead_device: item?.[34],
+        operateur_mobile: item?.[29],
+        is_internal: "true",
+      };
+    },
+  },
+
+  ORANGE: {
+    mapColumnARMATIS: (item: string[]) => {
+      return {
+        id: generateNumericId(),
+
+        created_time: item?.[1],
+        ad_id: item?.[2],
+        ad_name: item?.[3],
+        adset_id: item?.[4],
+        adset_name: item?.[5],
+        campaign_id: item?.[6],
+        campaign_name: item?.[7],
+        form_id: item?.[8],
+        form_name: item?.[9],
+        is_organic: item?.[10],
+        platform: item?.[11],
+
+        email: item?.[12],
+        "e-mail": item?.[13],
+        TEL2: item?.[14],
+        Fournisseur_actuel: item?.[15],
+        CP: item?.[16],
+        Depuis: item?.[17],
+        Options: item?.[18],
+        Preference: item?.[22],
+        time2call: "",
+        Prix: item?.[25],
+        Recherche: "",
+        nom: "",
+        prenom: "",
+        Ville: "",
+        utm_device: "",
+        lead_device: "",
+        operateur_mobile: "",
+        is_internal: "true",
+      };
+    },
+
+    mapColumnTUNIS: (item: string[]) => {
+      return {
+        id: generateNumericId(),
+
+        created_time: item?.[1],
+        ad_id: item?.[2],
+        ad_name: item?.[3],
+        adset_id: item?.[4],
+        adset_name: item?.[5],
+        campaign_id: item?.[6],
+        campaign_name: item?.[7],
+        form_id: item?.[8],
+        form_name: item?.[9],
+        is_organic: item?.[10],
+        platform: item?.[11],
+
+        email: item?.[12],
+        "e-mail": item?.[13],
+        TEL2: item?.[14],
+        Fournisseur_actuel: item?.[15],
+        CP: item?.[16],
+        Depuis: item?.[17],
+        Options: item?.[18],
+        Preference: item?.[19],
+        time2call: "",
+        Prix: item?.[21],
+        Recherche: "",
+        nom: "",
+        prenom: "",
+        Ville: "",
+        utm_device: "",
+        lead_device: "",
+        operateur_mobile: "",
+        is_internal: "true",
+      };
+    },
+
+    mapColumnDPI: (item: string[]) => {
+      return {
+        id: generateNumericId(),
+
+        created_time: item?.[1],
+        ad_id: item?.[2],
+        ad_name: item?.[3],
+        adset_id: item?.[4],
+        adset_name: item?.[5],
+        campaign_id: item?.[6],
+        campaign_name: item?.[7],
+        form_id: item?.[8],
+        form_name: item?.[9],
+        is_organic: item?.[10],
+        platform: item?.[11],
+
+        email: item?.[12],
+        "e-mail": item?.[13],
+        TEL2: item?.[14],
+        Fournisseur_actuel: item?.[15],
+        CP: item?.[16],
+        Depuis: item?.[17],
+        Options: item?.[18],
+        Preference: item?.[19],
+        time2call: "",
+        Prix: item?.[21],
+        Recherche: "",
+        nom: "",
+        prenom: "",
+        Ville: "",
+        utm_device: "",
+        lead_device: "",
+        operateur_mobile: "",
+        is_internal: "true",
+      };
+    },
+
+    mapColumnKONECTA: (item: string[]) => {
+      return {
+        id: generateNumericId(),
+
+        created_time: item?.[1],
+        ad_id: item?.[2],
+        ad_name: item?.[3],
+        adset_id: item?.[4],
+        adset_name: item?.[5],
+        campaign_id: item?.[6],
+        campaign_name: item?.[7],
+        form_id: item?.[8],
+        form_name: item?.[9],
+        is_organic: item?.[10],
+        platform: item?.[11],
+
+        email: item?.[22],
+        "e-mail": item?.[23],
+        TEL2: item?.[24],
+        Fournisseur_actuel: item?.[13],
+        CP: item?.[21],
+        Depuis: item?.[37],
+        Options: item?.[39],
+        Preference: item?.[44],
+        time2call: "",
+        Prix: item?.[46],
+        Recherche: "",
+        nom: "",
+        prenom: "",
+        Ville: "",
+        utm_device: "",
+        lead_device: "",
+        operateur_mobile: "",
+        is_internal: "true",
+      };
+    },
+
+    mapColumnSATEL: (item: string[]) => {
+      return {
+        id: generateNumericId(),
+
+        created_time: item?.[1],
+        ad_id: item?.[2],
+        ad_name: item?.[3],
+        adset_id: item?.[4],
+        adset_name: item?.[5],
+        campaign_id: item?.[6],
+        campaign_name: item?.[7],
+        form_id: item?.[8],
+        form_name: item?.[9],
+        is_organic: item?.[10],
+        platform: item?.[11],
+
+        email: item?.[15],
+        "e-mail": item?.[15],
+        TEL2: item?.[16],
+        Fournisseur_actuel: item?.[12],
+        CP: item?.[34],
+        Depuis: item?.[27],
+        Options: item?.[20],
+        Preference: item?.[22],
+        time2call: "",
+        Prix: item?.[33],
+        Recherche: "",
+        nom: "",
+        prenom: "",
+        Ville: "",
+        utm_device: "",
+        lead_device: "",
+        operateur_mobile: "",
+        is_internal: "true",
+      };
+    },
+
+    mapColumnTERSEA: (item: string[]) => {
+      return {
+        id: generateNumericId(),
+
+        created_time: item?.[1],
+        ad_id: item?.[2],
+        ad_name: item?.[3],
+        adset_id: item?.[4],
+        adset_name: item?.[5],
+        campaign_id: item?.[6],
+        campaign_name: item?.[7],
+        form_id: item?.[8],
+        form_name: item?.[9],
+        is_organic: item?.[10],
+        platform: item?.[11],
+
+        email: item?.[12],
+        "e-mail": item?.[13],
+        TEL2: item?.[14],
+        Fournisseur_actuel: item?.[15],
+        CP: item?.[16],
+        Depuis: item?.[17],
+        Options: item?.[18],
+        Preference: item?.[19],
+        time2call: "",
+        Prix: item?.[21],
         Recherche: "",
         nom: "",
         prenom: "",
@@ -341,7 +601,7 @@ export const mapColumnFn = {
     /* DISCONTINUED */
     mapColumnAFFINICIA: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -378,7 +638,7 @@ export const mapColumnFn = {
 
     mapColumnK_SFR: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -415,7 +675,7 @@ export const mapColumnFn = {
 
     mapColumnRIGHTPLACE: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -452,7 +712,7 @@ export const mapColumnFn = {
 
     mapColumnW_AGADIR: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -489,7 +749,7 @@ export const mapColumnFn = {
 
     mapColumnW_DAKAR: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -526,7 +786,7 @@ export const mapColumnFn = {
 
     mapColumnW_FES: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -563,7 +823,7 @@ export const mapColumnFn = {
 
     mapColumnW_MARRAKECH: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -602,7 +862,7 @@ export const mapColumnFn = {
   FREE: {
     mapColumnPURPREMIUM: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -637,234 +897,10 @@ export const mapColumnFn = {
     },
   },
 
-  ORANGE: {
-    mapColumnARMATIS: (item: string[]) => {
-      return {
-        id: generateNumericId(11),
-
-        created_time: item?.[1],
-        ad_id: item?.[2],
-        ad_name: item?.[3],
-        adset_id: item?.[4],
-        adset_name: item?.[5],
-        campaign_id: item?.[6],
-        campaign_name: item?.[7],
-        form_id: item?.[8],
-        form_name: item?.[9],
-        is_organic: item?.[10],
-        platform: item?.[11],
-
-        email: item?.[12],
-        "e-mail": item?.[13],
-        TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
-        CP: item?.[16],
-        Depuis: item?.[17],
-        Options: item?.[18],
-        Preference: item?.[22],
-        time2call: "",
-        Prix: item?.[25],
-        Recherche: "",
-        nom: "",
-        prenom: "",
-        Ville: "",
-        utm_device: "",
-        lead_device: "",
-        operateur_mobile: "",
-        is_internal: "true",
-      };
-    },
-
-    mapColumnTUNIS: (item: string[]) => {
-      return {
-        id: generateNumericId(11),
-
-        created_time: item?.[1],
-        ad_id: item?.[2],
-        ad_name: item?.[3],
-        adset_id: item?.[4],
-        adset_name: item?.[5],
-        campaign_id: item?.[6],
-        campaign_name: item?.[7],
-        form_id: item?.[8],
-        form_name: item?.[9],
-        is_organic: item?.[10],
-        platform: item?.[11],
-
-        email: item?.[12],
-        "e-mail": item?.[13],
-        TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
-        CP: item?.[16],
-        Depuis: item?.[17],
-        Options: item?.[18],
-        Preference: item?.[19],
-        time2call: "",
-        Prix: item?.[21],
-        Recherche: "",
-        nom: "",
-        prenom: "",
-        Ville: "",
-        utm_device: "",
-        lead_device: "",
-        operateur_mobile: "",
-        is_internal: "true",
-      };
-    },
-
-    mapColumnDPI: (item: string[]) => {
-      return {
-        id: generateNumericId(11),
-
-        created_time: item?.[1],
-        ad_id: item?.[2],
-        ad_name: item?.[3],
-        adset_id: item?.[4],
-        adset_name: item?.[5],
-        campaign_id: item?.[6],
-        campaign_name: item?.[7],
-        form_id: item?.[8],
-        form_name: item?.[9],
-        is_organic: item?.[10],
-        platform: item?.[11],
-
-        email: item?.[12],
-        "e-mail": item?.[13],
-        TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
-        CP: item?.[16],
-        Depuis: item?.[17],
-        Options: item?.[18],
-        Preference: item?.[19],
-        time2call: "",
-        Prix: item?.[21],
-        Recherche: "",
-        nom: "",
-        prenom: "",
-        Ville: "",
-        utm_device: "",
-        lead_device: "",
-        operateur_mobile: "",
-        is_internal: "true",
-      };
-    },
-
-    mapColumnKONECTA: (item: string[]) => {
-      return {
-        id: generateNumericId(11),
-
-        created_time: item?.[1],
-        ad_id: item?.[2],
-        ad_name: item?.[3],
-        adset_id: item?.[4],
-        adset_name: item?.[5],
-        campaign_id: item?.[6],
-        campaign_name: item?.[7],
-        form_id: item?.[8],
-        form_name: item?.[9],
-        is_organic: item?.[10],
-        platform: item?.[11],
-
-        email: item?.[22],
-        "e-mail": item?.[23],
-        TEL2: item?.[24],
-        Fournisseur_actuel: item?.[13],
-        CP: item?.[21],
-        Depuis: item?.[37],
-        Options: item?.[39],
-        Preference: item?.[44],
-        time2call: "",
-        Prix: item?.[46],
-        Recherche: "",
-        nom: "",
-        prenom: "",
-        Ville: "",
-        utm_device: "",
-        lead_device: "",
-        operateur_mobile: "",
-        is_internal: "true",
-      };
-    },
-
-    mapColumnSATEL: (item: string[]) => {
-      return {
-        id: generateNumericId(11),
-
-        created_time: item?.[1],
-        ad_id: item?.[2],
-        ad_name: item?.[3],
-        adset_id: item?.[4],
-        adset_name: item?.[5],
-        campaign_id: item?.[6],
-        campaign_name: item?.[7],
-        form_id: item?.[8],
-        form_name: item?.[9],
-        is_organic: item?.[10],
-        platform: item?.[11],
-
-        email: item?.[15],
-        "e-mail": item?.[15],
-        TEL2: item?.[16],
-        Fournisseur_actuel: item?.[12],
-        CP: item?.[34],
-        Depuis: item?.[27],
-        Options: item?.[20],
-        Preference: item?.[22],
-        time2call: "",
-        Prix: item?.[33],
-        Recherche: "",
-        nom: "",
-        prenom: "",
-        Ville: "",
-        utm_device: "",
-        lead_device: "",
-        operateur_mobile: "",
-        is_internal: "true",
-      };
-    },
-
-    mapColumnTERSEA: (item: string[]) => {
-      return {
-        id: generateNumericId(11),
-
-        created_time: item?.[1],
-        ad_id: item?.[2],
-        ad_name: item?.[3],
-        adset_id: item?.[4],
-        adset_name: item?.[5],
-        campaign_id: item?.[6],
-        campaign_name: item?.[7],
-        form_id: item?.[8],
-        form_name: item?.[9],
-        is_organic: item?.[10],
-        platform: item?.[11],
-
-        email: item?.[12],
-        "e-mail": item?.[13],
-        TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
-        CP: item?.[16],
-        Depuis: item?.[17],
-        Options: item?.[18],
-        Preference: item?.[19],
-        time2call: "",
-        Prix: item?.[21],
-        Recherche: "",
-        nom: "",
-        prenom: "",
-        Ville: "",
-        utm_device: "",
-        lead_device: "",
-        operateur_mobile: "",
-        is_internal: "true",
-      };
-    },
-  },
-
   ENERGIE: {
     mapColumnADMTOTAL: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -899,7 +935,7 @@ export const mapColumnFn = {
 
     mapColumnADMVATTENFALL: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -934,7 +970,7 @@ export const mapColumnFn = {
 
     mapColumnAFFINICIATOTAL: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -969,7 +1005,7 @@ export const mapColumnFn = {
 
     mapColumnENGIE: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -1004,7 +1040,7 @@ export const mapColumnFn = {
 
     mapColumnWEKIWI: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],
@@ -1039,7 +1075,7 @@ export const mapColumnFn = {
 
     mapColumnENI: (item: string[]) => {
       return {
-        id: generateNumericId(11),
+        id: generateNumericId(),
 
         created_time: item?.[1],
         ad_id: item?.[2],

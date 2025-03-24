@@ -17,6 +17,18 @@ export async function formatAction(
   // "BYTEL"
   if (section === "BYTEL") {
     switch (key) {
+      case "MASTER BYTEL":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnMASTER_BYTEL(
+            lead.split(LEAD_SEPARATOR)
+          )
+        );
+
+      case "ADM DAKAR":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnADM_DAKAR(lead.split(LEAD_SEPARATOR))
+        );
+
       case "ADM":
         return leadsArray.map((lead) =>
           mapColumnFn?.[section].mapColumnADM(lead.split(LEAD_SEPARATOR))
