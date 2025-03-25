@@ -28,6 +28,7 @@ import { CLIENTS } from "@/constant/constant";
 import { Dispatch, SetStateAction } from "react";
 import { findDropdownTiggerName } from "@/utils/find-dropdown-trigger-name";
 import { cn } from "@/lib/utils";
+import { useClientStore } from "@/store/use-client.store";
 
 export default function ClientDropdownMenu({
   clientkey,
@@ -35,9 +36,12 @@ export default function ClientDropdownMenu({
   setClientkey,
   setSection,
 }: TProps) {
+  const { setClient } = useClientStore();
+
   const onSelect = (value: TClients, section: TSection) => {
     setClientkey(value);
     setSection(section);
+    setClient(value);
   };
 
   const triggerBtnText = findDropdownTiggerName(CLIENTS, clientkey!);

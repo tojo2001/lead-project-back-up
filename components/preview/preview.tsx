@@ -5,6 +5,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -12,10 +13,12 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "../ui/textarea";
 import { useAuthStore } from "@/store/use-auth.store";
+import { useClientStore } from "@/store/use-client.store";
 
 type TProps = {
   children: React.ReactNode;
   hasResult: boolean;
+  nombreOfLeads: number;
   asSCVText: string | null;
   pending: {
     formatting: boolean;
@@ -28,12 +31,14 @@ type TProps = {
 export default function Preview({
   children,
   hasResult,
+  nombreOfLeads,
   asSCVText,
   pending,
   onPush,
   closeBtnRef,
 }: TProps) {
   const { authToken, setAuthToken } = useAuthStore();
+  const { client } = useClientStore();
   const [isCopy, setIsCopy] = useState(false);
   const [step, setStep] = useState<1 | 2 | 0>(1);
 
@@ -59,7 +64,12 @@ export default function Preview({
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>CSV Preview</DialogTitle>
+          <DialogTitle>{nombreOfLeads} Lead(s) in total</DialogTitle>
+          <DialogDescription>
+            A total of <span className="font-bold">{nombreOfLeads}</span> lead
+            {nombreOfLeads > 1 ? "s" : ""} have been transferred from{" "}
+            <span className="font-bold underline">{client}</span> to MERE.
+          </DialogDescription>
         </DialogHeader>
         {pending.formatting ? (
           <LoaderCircle className="animate-spin" />

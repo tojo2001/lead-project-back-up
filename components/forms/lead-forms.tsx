@@ -11,9 +11,11 @@ import { RotateCw } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { pushContactAction } from "@/actions/push-contact.action";
 import { useAuthStore } from "@/store/use-auth.store";
+import { useClientStore } from "@/store/use-client.store";
 
 export default function LeadForm() {
   const { authToken } = useAuthStore();
+  const { setClient } = useClientStore();
   const [section, setSection] = useState<TSection | null>(null);
   const [clientkey, setClientkey] = useState<TClients | null>(null);
   const [leads, setLeads] = useState("");
@@ -58,6 +60,7 @@ export default function LeadForm() {
     setClientkey(null);
     setLeads("");
     setDataContact(null);
+    setClient(null);
   };
 
   const onPush = async () => {
@@ -114,6 +117,7 @@ export default function LeadForm() {
       <div className="flex items-center space-x-2">
         <Preview
           hasResult={!!dataContact?.length}
+          nombreOfLeads={dataContact?.length ?? 0}
           asSCVText={dataToCSVFormat(dataContact)}
           pending={pending}
           onPush={onPush}
