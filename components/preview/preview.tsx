@@ -67,8 +67,9 @@ export default function Preview({
           <DialogTitle>{nombreOfLeads} Lead(s) in total</DialogTitle>
           <DialogDescription>
             A total of <span className="font-bold">{nombreOfLeads}</span> lead
-            {nombreOfLeads > 1 ? "s" : ""} have been transferred from{" "}
-            <span className="font-bold underline">{client}</span> to MERE.
+            {nombreOfLeads > 1 ? "s" : ""} have been transferred from the{" "}
+            <span className="font-bold underline">{client}</span> type to the
+            MERE type.
           </DialogDescription>
         </DialogHeader>
         {pending.formatting ? (

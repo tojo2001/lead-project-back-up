@@ -115,6 +115,11 @@ export async function formatAction(
   // "SFR"
   else if (section === "SFR") {
     switch (key) {
+      case "MASTER SFR":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnMASTER_SFR(lead.split(LEAD_SEPARATOR))
+        );
+
       case "AFFINICIA":
         return leadsArray.map((lead) =>
           mapColumnFn?.[section].mapColumnAFFINICIA(lead.split(LEAD_SEPARATOR))
