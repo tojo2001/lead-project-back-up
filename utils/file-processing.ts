@@ -1,8 +1,13 @@
+import { getPreference } from "./get-preference";
 import { generateNumericId } from "./id-generator";
 
 export const mapColumnFn = {
   BYTEL: {
     mapColumnMASTER_BYTEL: (item: string[]) => {
+      const Fournisseur_actuel = item?.[15];
+      const Preference = item?.[19];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -21,11 +26,11 @@ export const mapColumnFn = {
         email: item?.[12],
         "e-mail": item?.[13],
         TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
+        Fournisseur_actuel,
         CP: item?.[16],
         Depuis: item?.[17],
         Options: item?.[18],
-        Preference: item?.[19],
+        Preference: formatedPreference,
         time2call: item?.[20],
         Prix: item?.[21],
         Recherche: item?.[22],
@@ -40,6 +45,10 @@ export const mapColumnFn = {
     },
 
     mapColumnADM_DAKAR: (item: string[]) => {
+      const Fournisseur_actuel = item?.[15];
+      const Preference = item?.[19];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -58,11 +67,11 @@ export const mapColumnFn = {
         email: item?.[12],
         "e-mail": item?.[13],
         TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
+        Fournisseur_actuel,
         CP: item?.[16],
         Depuis: item?.[17],
         Options: item?.[18],
-        Preference: item?.[19],
+        Preference: formatedPreference,
         time2call: item?.[20],
         Prix: item?.[21],
         Recherche: item?.[22],
@@ -77,6 +86,10 @@ export const mapColumnFn = {
     },
 
     mapColumnADM: (item: string[]) => {
+      const Fournisseur_actuel = item?.[25];
+      const Preference = item?.[17];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -95,11 +108,11 @@ export const mapColumnFn = {
         email: item?.[19],
         "e-mail": item?.[20],
         TEL2: item?.[13],
-        Fournisseur_actuel: item?.[25],
+        Fournisseur_actuel,
         CP: item?.[26],
         Depuis: item?.[14],
         Options: item?.[16],
-        Preference: item?.[17],
+        Preference: formatedPreference,
         time2call: "",
         Prix: item?.[37],
         Recherche: item?.[41],
@@ -114,6 +127,10 @@ export const mapColumnFn = {
     },
 
     mapColumnEUROCRM: (item: string[]) => {
+      const Fournisseur_actuel = item?.[12];
+      const Preference = item?.[36];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -132,11 +149,11 @@ export const mapColumnFn = {
         email: item?.[20],
         "e-mail": item?.[30],
         TEL2: item?.[19],
-        Fournisseur_actuel: item?.[12],
+        Fournisseur_actuel,
         CP: item?.[34],
         Depuis: item?.[27],
         Options: item?.[33],
-        Preference: item?.[36],
+        Preference: formatedPreference,
         time2call: "",
         Prix: item?.[43],
         Recherche: item?.[44],
@@ -151,6 +168,10 @@ export const mapColumnFn = {
     },
 
     mapColumnATLAS: (item: string[]) => {
+      const Fournisseur_actuel = item?.[15];
+      const Preference = item?.[19];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -169,11 +190,11 @@ export const mapColumnFn = {
         email: item?.[12],
         "e-mail": item?.[13],
         TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
+        Fournisseur_actuel,
         CP: item?.[16],
         Depuis: item?.[17],
         Options: item?.[18],
-        Preference: item?.[19],
+        Preference: formatedPreference,
         time2call: item?.[20],
         Prix: item?.[21],
         Recherche: item?.[22],
@@ -188,6 +209,10 @@ export const mapColumnFn = {
     },
 
     mapColumnFEDALA: (item: string[]) => {
+      const Fournisseur_actuel = item?.[15];
+      const Preference = item?.[19];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -206,11 +231,11 @@ export const mapColumnFn = {
         email: item?.[12],
         "e-mail": item?.[13],
         TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
+        Fournisseur_actuel,
         CP: item?.[16],
         Depuis: item?.[17],
         Options: item?.[18],
-        Preference: item?.[19],
+        Preference: formatedPreference,
         time2call: item?.[20],
         Prix: item?.[21],
         Recherche: item?.[22],
@@ -225,6 +250,10 @@ export const mapColumnFn = {
     },
 
     mapColumnMARINA: (item: string[]) => {
+      const Fournisseur_actuel = item?.[15];
+      const Preference = item?.[19];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -243,11 +272,11 @@ export const mapColumnFn = {
         email: item?.[12],
         "e-mail": item?.[13],
         TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
+        Fournisseur_actuel,
         CP: item?.[16],
         Depuis: item?.[17],
         Options: item?.[18],
-        Preference: item?.[19],
+        Preference: formatedPreference,
         time2call: item?.[20],
         Prix: item?.[21],
         Recherche: item?.[22],
@@ -262,6 +291,10 @@ export const mapColumnFn = {
     },
 
     mapColumnVIPP: (item: string[]) => {
+      const Fournisseur_actuel = item?.[13];
+      const Preference = item?.[41];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -280,11 +313,11 @@ export const mapColumnFn = {
         email: item?.[16],
         "e-mail": item?.[32],
         TEL2: item?.[17],
-        Fournisseur_actuel: item?.[13],
+        Fournisseur_actuel,
         CP: item?.[18],
         Depuis: item?.[38],
         Options: item?.[39],
-        Preference: item?.[41],
+        Preference: formatedPreference,
         time2call: "",
         Prix: item?.[47],
         Recherche: "",
@@ -299,6 +332,10 @@ export const mapColumnFn = {
     },
 
     mapColumnWEBHELP: (item: string[]) => {
+      const Fournisseur_actuel = item?.[17];
+      const Preference = item?.[28];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -321,7 +358,7 @@ export const mapColumnFn = {
         CP: item?.[26],
         Depuis: item?.[18],
         Options: item?.[25],
-        Preference: item?.[28],
+        Preference: formatedPreference,
         time2call: "",
         Prix: item?.[34],
         Recherche: item?.[43],
@@ -336,6 +373,10 @@ export const mapColumnFn = {
     },
 
     mapColumnALGER: (item: string[]) => {
+      const Fournisseur_actuel = item?.[12];
+      const Preference = item?.[20];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -354,11 +395,11 @@ export const mapColumnFn = {
         email: item?.[14],
         "e-mail": item?.[15],
         TEL2: item?.[13],
-        Fournisseur_actuel: item?.[12],
+        Fournisseur_actuel,
         CP: item?.[18],
         Depuis: item?.[16],
         Options: item?.[19],
-        Preference: item?.[20],
+        Preference: formatedPreference,
         time2call: "",
         Prix: item?.[28],
         Recherche: item?.[31],
@@ -374,7 +415,12 @@ export const mapColumnFn = {
   },
 
   ORANGE: {
+    /* DISCONTINUED */
     mapColumnARMATIS: (item: string[]) => {
+      const Fournisseur_actuel = item?.[15];
+      const Preference = item?.[22];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -393,11 +439,11 @@ export const mapColumnFn = {
         email: item?.[12],
         "e-mail": item?.[13],
         TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
+        Fournisseur_actuel,
         CP: item?.[16],
         Depuis: item?.[17],
         Options: item?.[18],
-        Preference: item?.[22],
+        Preference: formatedPreference,
         time2call: "",
         Prix: item?.[25],
         Recherche: "",
@@ -410,8 +456,14 @@ export const mapColumnFn = {
         is_internal: "true",
       };
     },
+    /* DISCONTINUED */
 
+    /* DISCONTINUED */
     mapColumnTUNIS: (item: string[]) => {
+      const Fournisseur_actuel = item?.[15];
+      const Preference = item?.[19];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -430,11 +482,11 @@ export const mapColumnFn = {
         email: item?.[12],
         "e-mail": item?.[13],
         TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
+        Fournisseur_actuel,
         CP: item?.[16],
         Depuis: item?.[17],
         Options: item?.[18],
-        Preference: item?.[19],
+        Preference: formatedPreference,
         time2call: "",
         Prix: item?.[21],
         Recherche: "",
@@ -447,8 +499,13 @@ export const mapColumnFn = {
         is_internal: "true",
       };
     },
+    /* DISCONTINUED */
 
     mapColumnDPI: (item: string[]) => {
+      const Fournisseur_actuel = item?.[15];
+      const Preference = item?.[19];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -467,11 +524,11 @@ export const mapColumnFn = {
         email: item?.[12],
         "e-mail": item?.[13],
         TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
+        Fournisseur_actuel,
         CP: item?.[16],
         Depuis: item?.[17],
         Options: item?.[18],
-        Preference: item?.[19],
+        Preference: formatedPreference,
         time2call: item?.[20],
         Prix: item?.[21],
         Recherche: item?.[22],
@@ -486,6 +543,10 @@ export const mapColumnFn = {
     },
 
     mapColumnKONECTA: (item: string[]) => {
+      const Fournisseur_actuel = item?.[13];
+      const Preference = item?.[44];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -504,11 +565,11 @@ export const mapColumnFn = {
         email: item?.[22],
         "e-mail": item?.[23],
         TEL2: item?.[24],
-        Fournisseur_actuel: item?.[13],
+        Fournisseur_actuel,
         CP: item?.[20],
         Depuis: item?.[16],
         Options: item?.[39],
-        Preference: item?.[44],
+        Preference: formatedPreference,
         time2call: "",
         Prix: item?.[46],
         Recherche: item?.[58],
@@ -523,6 +584,10 @@ export const mapColumnFn = {
     },
 
     mapColumnSATEL: (item: string[]) => {
+      const Fournisseur_actuel = item?.[12];
+      const Preference = item?.[22];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -541,11 +606,11 @@ export const mapColumnFn = {
         email: item?.[15],
         "e-mail": item?.[15],
         TEL2: item?.[16],
-        Fournisseur_actuel: item?.[12],
+        Fournisseur_actuel,
         CP: item?.[34],
         Depuis: item?.[27],
         Options: item?.[20],
-        Preference: item?.[22],
+        Preference: formatedPreference,
         time2call: "",
         Prix: item?.[33],
         Recherche: item?.[31],
@@ -560,6 +625,10 @@ export const mapColumnFn = {
     },
 
     mapColumnTERSEA: (item: string[]) => {
+      const Fournisseur_actuel = item?.[15];
+      const Preference = item?.[19];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -578,11 +647,11 @@ export const mapColumnFn = {
         email: item?.[12],
         "e-mail": item?.[13],
         TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
+        Fournisseur_actuel,
         CP: item?.[16],
         Depuis: item?.[17],
         Options: item?.[18],
-        Preference: item?.[19],
+        Preference: formatedPreference,
         time2call: item?.[20],
         Prix: item?.[21],
         Recherche: item?.[22],
@@ -599,6 +668,10 @@ export const mapColumnFn = {
 
   SFR: {
     mapColumnMASTER_SFR: (item: string[]) => {
+      const Fournisseur_actuel = item?.[15];
+      const Preference = item?.[19];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -617,11 +690,11 @@ export const mapColumnFn = {
         email: item?.[12],
         "e-mail": item?.[13],
         TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
+        Fournisseur_actuel,
         CP: item?.[16],
         Depuis: item?.[17],
         Options: item?.[18],
-        Preference: item?.[19],
+        Preference: formatedPreference,
         time2call: item?.[20],
         Prix: item?.[21],
         Recherche: item?.[22],
@@ -637,6 +710,10 @@ export const mapColumnFn = {
 
     /* DISCONTINUED */
     mapColumnAFFINICIA: (item: string[]) => {
+      const Fournisseur_actuel = item?.[20];
+      const Preference = item?.[21];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -654,11 +731,11 @@ export const mapColumnFn = {
         email: item?.[14],
         "e-mail": item?.[15],
         TEL2: item?.[12],
-        Fournisseur_actuel: item?.[20],
+        Fournisseur_actuel,
         CP: item?.[13],
         Depuis: item?.[23],
         Options: item?.[22],
-        Preference: item?.[21],
+        Preference: formatedPreference,
         time2call: "",
         Prix: item?.[32],
         Recherche: "",
@@ -675,6 +752,10 @@ export const mapColumnFn = {
 
     /* DISCONTINUED */
     mapColumnK_SFR: (item: string[]) => {
+      const Fournisseur_actuel = item?.[15];
+      const Preference = item?.[19];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -693,11 +774,11 @@ export const mapColumnFn = {
         email: item?.[12],
         "e-mail": item?.[13],
         TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
+        Fournisseur_actuel,
         CP: item?.[16],
         Depuis: item?.[17],
         Options: item?.[18],
-        Preference: item?.[19],
+        Preference: formatedPreference,
         time2call: item?.[20],
         Prix: item?.[21],
         Recherche: item?.[22],
@@ -713,6 +794,10 @@ export const mapColumnFn = {
     /* DISCONTINUED */
 
     mapColumnRIGHTPLACE: (item: string[]) => {
+      const Fournisseur_actuel = item?.[12];
+      const Preference = item?.[22];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -731,11 +816,11 @@ export const mapColumnFn = {
         email: item?.[17],
         "e-mail": item?.[18],
         TEL2: item?.[16],
-        Fournisseur_actuel: item?.[12],
+        Fournisseur_actuel,
         CP: item?.[15],
         Depuis: item?.[13],
         Options: item?.[14],
-        Preference: item?.[22],
+        Preference: formatedPreference,
         time2call: "",
         Prix: item?.[29],
         Recherche: item?.[32],
@@ -750,6 +835,10 @@ export const mapColumnFn = {
     },
 
     mapColumnW_AGADIR: (item: string[]) => {
+      const Fournisseur_actuel = item?.[15];
+      const Preference = item?.[19];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -768,11 +857,11 @@ export const mapColumnFn = {
         email: item?.[12],
         "e-mail": item?.[13],
         TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
+        Fournisseur_actuel,
         CP: item?.[16],
         Depuis: item?.[17],
         Options: item?.[18],
-        Preference: item?.[19],
+        Preference: formatedPreference,
         time2call: item?.[20],
         Prix: item?.[21],
         Recherche: item?.[22],
@@ -788,6 +877,10 @@ export const mapColumnFn = {
 
     /* NOT OPERATIONEL YET */
     mapColumnW_DAKAR: (item: string[]) => {
+      const Fournisseur_actuel = item?.[15];
+      const Preference = item?.[19];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -806,11 +899,11 @@ export const mapColumnFn = {
         email: item?.[12],
         "e-mail": item?.[13],
         TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
+        Fournisseur_actuel,
         CP: item?.[16],
         Depuis: item?.[17],
         Options: item?.[18],
-        Preference: item?.[19],
+        Preference: formatedPreference,
         time2call: item?.[20],
         Prix: item?.[21],
         Recherche: item?.[22],
@@ -826,6 +919,10 @@ export const mapColumnFn = {
     /* NOT OPERATIONEL YET */
 
     mapColumnW_FES: (item: string[]) => {
+      const Fournisseur_actuel = item?.[15];
+      const Preference = item?.[19];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -844,11 +941,11 @@ export const mapColumnFn = {
         email: item?.[12],
         "e-mail": item?.[13],
         TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
+        Fournisseur_actuel,
         CP: item?.[16],
         Depuis: item?.[17],
         Options: item?.[18],
-        Preference: item?.[19],
+        Preference: formatedPreference,
         time2call: item?.[20],
         Prix: item?.[21],
         Recherche: item?.[22],
@@ -863,6 +960,10 @@ export const mapColumnFn = {
     },
 
     mapColumnW_MARRAKECH: (item: string[]) => {
+      const Fournisseur_actuel = item?.[15];
+      const Preference = item?.[19];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -881,11 +982,11 @@ export const mapColumnFn = {
         email: item?.[12],
         "e-mail": item?.[13],
         TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
+        Fournisseur_actuel,
         CP: item?.[16],
         Depuis: item?.[17],
         Options: item?.[18],
-        Preference: item?.[19],
+        Preference: formatedPreference,
         time2call: item?.[20],
         Prix: item?.[21],
         Recherche: item?.[22],
@@ -902,6 +1003,10 @@ export const mapColumnFn = {
 
   FREE: {
     mapColumnPURPREMIUM: (item: string[]) => {
+      const Fournisseur_actuel = item?.[15];
+      const Preference = item?.[19];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+
       return {
         id: generateNumericId(),
 
@@ -920,11 +1025,11 @@ export const mapColumnFn = {
         email: item?.[12],
         "e-mail": item?.[13],
         TEL2: item?.[14],
-        Fournisseur_actuel: item?.[15],
+        Fournisseur_actuel,
         CP: item?.[16],
         Depuis: item?.[17],
         Options: item?.[18],
-        Preference: item?.[19],
+        Preference: formatedPreference,
         time2call: item?.[20],
         Prix: item?.[21],
         Recherche: item?.[22],
