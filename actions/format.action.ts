@@ -127,7 +127,7 @@ export async function formatAction(
 
       case "K SFR":
         return leadsArray.map((lead) =>
-          mapColumnFn?.[section].mapColumnRIGHTPLACE(lead.split(LEAD_SEPARATOR))
+          mapColumnFn?.[section].mapColumnK_SFR(lead.split(LEAD_SEPARATOR))
         );
 
       case "RIGHTPLACE":

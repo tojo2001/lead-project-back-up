@@ -7,7 +7,14 @@ type TProps = {
   setSection: Dispatch<SetStateAction<TSection | null>>;
 };
 
-import { SatelliteDish, Antenna, Zap, Rss, RadioTower } from "lucide-react";
+import {
+  SatelliteDish,
+  Antenna,
+  Zap,
+  Rss,
+  RadioTower,
+  TriangleAlert,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +31,14 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 import { CLIENTS } from "@/constant/constant";
 import { Dispatch, SetStateAction } from "react";
 import { findDropdownTiggerName } from "@/utils/find-dropdown-trigger-name";
@@ -48,29 +63,44 @@ export default function ClientDropdownMenu({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          className={cn(
-            triggerBtnText == "Choose client" ? "animate-pulse" : ""
-          )}
-        >
-          {triggerBtnText.includes("BYTEL") && (
-            <SatelliteDish className="mr-2 h-4 w-4" />
-          )}
-          {triggerBtnText.includes("ORANGE") && (
-            <Antenna className="mr-2 h-4 w-4" />
-          )}
-          {triggerBtnText.includes("SFR") && <Rss className="mr-2 h-4 w-4" />}
-          {triggerBtnText.includes("FREE") && (
-            <RadioTower className="mr-2 h-4 w-4" />
-          )}
-          {/* {triggerBtnText.includes("ENERGIE") && (
+      <div className="flex items-center justify-start gap-4">
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="outline"
+            className={cn(
+              triggerBtnText == "Choose client" ? "animate-pulse" : ""
+            )}
+          >
+            {triggerBtnText.includes("BYTEL") && (
+              <SatelliteDish className="mr-2 h-4 w-4" />
+            )}
+            {triggerBtnText.includes("ORANGE") && (
+              <Antenna className="mr-2 h-4 w-4" />
+            )}
+            {triggerBtnText.includes("SFR") && <Rss className="mr-2 h-4 w-4" />}
+            {triggerBtnText.includes("FREE") && (
+              <RadioTower className="mr-2 h-4 w-4" />
+            )}
+            {/* {triggerBtnText.includes("ENERGIE") && (
             <Zap className="mr-2 h-4 w-4" />
           )} */}
-          {triggerBtnText}
-        </Button>
-      </DropdownMenuTrigger>
+            {triggerBtnText}
+          </Button>
+        </DropdownMenuTrigger>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger className="border-b-2 border-orange-400">
+              <TriangleAlert className="text-orange-400" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <u>Important:</u>
+              <p>Select the client that provided the leads.</p>
+              <i>(Sélectionnez le client qui a fourni les leads.)</i>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
 
       <DropdownMenuContent className="w-56 mt-[6.5rem]" side="right">
         <DropdownMenuLabel>OMNI Clients</DropdownMenuLabel>

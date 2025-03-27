@@ -83,6 +83,10 @@ export const CLIENTS: {
         key: "MASTER SFR",
       },
       {
+        name: "AFFINICIA",
+        key: "AFFINICIA",
+      },
+      {
         name: "K-SFR",
         key: "K SFR",
       },

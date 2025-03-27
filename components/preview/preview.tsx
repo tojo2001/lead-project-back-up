@@ -117,8 +117,11 @@ export default function Preview({
             </Button>
           </DialogClose>
 
+          {/* <Button>Copy phone</Button> */}
           <Button onClick={onCopy}>
-            {!isCopy ? "Copy to clipboard" : "Copied"}
+            {!isCopy
+              ? `Copy ${nombreOfLeads > 1 ? "Leads" : "Lead"}`
+              : "Copied"}
           </Button>
 
           {/* <Button onClick={onStepChange}>{step === 1 ? "Next" : "Prev"}</Button> */}
