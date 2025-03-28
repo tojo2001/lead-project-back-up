@@ -12,6 +12,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { pushContactAction } from "@/actions/push-contact.action";
 import { useAuthStore } from "@/store/use-auth.store";
 import { useClientStore } from "@/store/use-client.store";
+import { TableSection } from "../table/section-table";
 
 export default function LeadForm() {
   const { authToken } = useAuthStore();
@@ -105,43 +106,56 @@ export default function LeadForm() {
   };
 
   return (
-    <form className="space-y-2 w-[22rem]" onSubmit={onPreview}>
-      <ClientDropdownMenu
-        clientkey={clientkey}
-        setClientkey={setClientkey}
-        section={section}
-        setSection={setSection}
-      />
+    <div>
+      <form className="space-y-2 w-[22rem]" onSubmit={onPreview}>
+        <ClientDropdownMenu
+          clientkey={clientkey}
+          setClientkey={setClientkey}
+          section={section}
+          setSection={setSection}
+        />
 
-      <Textarea
-        placeholder="The lead(s) pasted here will be transformed to type MERE."
-        className="resize-none w-full"
-        value={leads}
-        disabled={!clientkey}
-        onChange={(e) => setLeads(e.target.value)}
-      />
+        <Textarea
+          placeholder="The lead(s) pasted here will be transformed to type MERE."
+          className="resize-none w-full"
+          value={leads}
+          disabled={!clientkey}
+          onChange={(e) => setLeads(e.target.value)}
+        />
 
-      <div className="flex items-center space-x-2">
-        <Preview
-          hasResult={!!dataContact?.length}
-          nombreOfLeads={dataContact?.length ?? 0}
-          asSCVText={dataToCSVFormat(dataContact)}
-          phoneNumber={dataContactPhoneNumber}
-          pending={pending}
-          onPush={onPush}
-          closeBtnRef={closeBtnRef}
-        >
-          <Button type="submit" disabled={!section || !clientkey || !leads}>
-            Preview
-          </Button>
-        </Preview>
+        <div className="flex items-center space-x-2">
+          <Preview
+            hasResult={!!dataContact?.length}
+            nombreOfLeads={dataContact?.length ?? 0}
+            asSCVText={dataToCSVFormat(dataContact)}
+            phoneNumber={dataContactPhoneNumber}
+            pending={pending}
+            onPush={onPush}
+            closeBtnRef={closeBtnRef}
+          >
+            <Button type="submit" disabled={!section || !clientkey || !leads}>
+              Preview
+            </Button>
+          </Preview>
 
-        {!!section && !!clientkey && !!leads && (
-          <Button type="button" size="icon" variant="outline" onClick={onReset}>
-            <RotateCw />
-          </Button>
-        )}
-      </div>
-    </form>
+          {!!section && !!clientkey && !!leads && (
+            <Button
+              type="button"
+              size="icon"
+              variant="outline"
+              onClick={onReset}
+            >
+              <RotateCw />
+            </Button>
+          )}
+        </div>
+      </form>
+
+      {dataContact && (
+        <div className="fixed bottom-2 left-1/2 -translate-x-1/2">
+          <TableSection dataTable={dataContact} />
+        </div>
+      )}
+    </div>
   );
 }
