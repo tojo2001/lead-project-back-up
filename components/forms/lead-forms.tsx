@@ -20,6 +20,9 @@ export default function LeadForm() {
   const [clientkey, setClientkey] = useState<TClients | null>(null);
   const [leads, setLeads] = useState("");
   const [dataContact, setDataContact] = useState<IDataContact[] | null>(null);
+  const [dataContactPhoneNumber, setDataContactPhoneNumber] = useState<
+    string[]
+  >([]);
   const [pending, setPending] = useState({
     formatting: false,
     processing: false,
@@ -43,6 +46,10 @@ export default function LeadForm() {
       )) as IDataContact[];
 
       setDataContact(leadsArray);
+
+      // get phone number
+      const phoneNumbers = leadsArray.map((leads) => leads.TEL2);
+      setDataContactPhoneNumber(phoneNumbers);
     } catch (error) {
       toast({
         title: "Something went wrong try again",
@@ -119,6 +126,7 @@ export default function LeadForm() {
           hasResult={!!dataContact?.length}
           nombreOfLeads={dataContact?.length ?? 0}
           asSCVText={dataToCSVFormat(dataContact)}
+          phoneNumber={dataContactPhoneNumber}
           pending={pending}
           onPush={onPush}
           closeBtnRef={closeBtnRef}

@@ -1,4 +1,10 @@
-import { ClipboardCheck, ClipboardCopy, LoaderCircle } from "lucide-react";
+import {
+  ClipboardCheck,
+  ClipboardCopy,
+  LoaderCircle,
+  Phone,
+  ScrollText,
+} from "lucide-react";
 import { Button } from "../ui/button";
 import { MutableRefObject, useEffect, useState } from "react";
 import {
@@ -20,6 +26,7 @@ type TProps = {
   hasResult: boolean;
   nombreOfLeads: number;
   asSCVText: string | null;
+  phoneNumber: string[];
   pending: {
     formatting: boolean;
     processing: boolean;
@@ -32,6 +39,7 @@ export default function Preview({
   children,
   hasResult,
   nombreOfLeads,
+  phoneNumber,
   asSCVText,
   pending,
   onPush,
@@ -39,12 +47,16 @@ export default function Preview({
 }: TProps) {
   const { authToken, setAuthToken } = useAuthStore();
   const { client } = useClientStore();
-  const [isCopy, setIsCopy] = useState(false);
+  const [isCopy, setIsCopy] = useState<"PHONE" | "LEADS" | false>(false);
   const [step, setStep] = useState<1 | 2 | 0>(1);
 
-  const onCopy = () => {
-    setIsCopy(true);
-    window.navigator.clipboard.writeText(asSCVText!);
+  const onCopy = (key: "PHONE" | "LEADS") => {
+    setIsCopy(key);
+    key === "LEADS"
+      ? window.navigator.clipboard.writeText(asSCVText!)
+      : window.navigator.clipboard.writeText(
+          JSON.stringify(phoneNumber, null, 4)
+        );
   };
 
   const onStepChange = () => {
@@ -87,14 +99,32 @@ export default function Preview({
                       onChange={() => null}
                     />
 
-                    {/* <Button
-                      size="icon"
-                      variant="secondary"
-                      className="absolute top-2 right-2 z-10"
-                      onClick={onCopy}
-                    >
-                      {!isCopy ? <ClipboardCopy /> : <ClipboardCheck />}
-                    </Button> */}
+                    <div className="absolute flex items-center justify-start top-2 right-2 z-10 gap-2">
+                      <Button
+                        onClick={() => onCopy("PHONE")}
+                        className="flex items-center justify-center group"
+                      >
+                        <Phone size={20} className="block group-hover:hidden" />
+                        <span className="hidden group-hover:block">
+                          {isCopy == "PHONE" ? "Copied" : "Copy phone number"}
+                        </span>
+                      </Button>
+
+                      <Button
+                        onClick={() => onCopy("LEADS")}
+                        className="flex items-center justify-center group"
+                      >
+                        <ScrollText
+                          size={20}
+                          className="block group-hover:hidden"
+                        />
+                        <span className="hidden group-hover:block">
+                          {isCopy == "LEADS"
+                            ? "Copied"
+                            : `Copy ${nombreOfLeads > 1 ? "Leads" : "Lead"}`}
+                        </span>
+                      </Button>
+                    </div>
                   </div>
                 ) : (
                   <Textarea
@@ -117,13 +147,9 @@ export default function Preview({
             </Button>
           </DialogClose>
 
-          {/* <Button>Copy phone</Button> */}
-          <Button onClick={onCopy}>
-            {!isCopy
-              ? `Copy ${nombreOfLeads > 1 ? "Leads" : "Lead"}`
-              : "Copied"}
+          <Button disabled variant="destructive">
+            Proceed to Push
           </Button>
-
           {/* <Button onClick={onStepChange}>{step === 1 ? "Next" : "Prev"}</Button> */}
 
           {/* {step === 2 && (
