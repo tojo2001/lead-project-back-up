@@ -20,13 +20,11 @@ import {
 import { Textarea } from "../ui/textarea";
 import { useAuthStore } from "@/store/use-auth.store";
 import { useClientStore } from "@/store/use-client.store";
+import { useLeadStore } from "@/store/use-lead.store";
+import CopySection from "../copy-section";
 
 type TProps = {
   children: React.ReactNode;
-  hasResult: boolean;
-  nombreOfLeads: number;
-  asSCVText: string | null;
-  phoneNumber: string[];
   pending: {
     formatting: boolean;
     processing: boolean;
@@ -37,36 +35,21 @@ type TProps = {
 
 export default function Preview({
   children,
-  hasResult,
-  nombreOfLeads,
-  phoneNumber,
-  asSCVText,
   pending,
   onPush,
   closeBtnRef,
 }: TProps) {
   const { authToken, setAuthToken } = useAuthStore();
   const { client } = useClientStore();
-  const [isCopy, setIsCopy] = useState<"PHONE" | "LEADS" | false>(false);
-  const [step, setStep] = useState<1 | 2 | 0>(1);
+  const { leadData } = useLeadStore();
 
-  const onCopy = (key: "PHONE" | "LEADS") => {
-    setIsCopy(key);
-    key === "LEADS"
-      ? window.navigator.clipboard.writeText(asSCVText!)
-      : window.navigator.clipboard.writeText(
-          JSON.stringify(phoneNumber, null, 4)
-        );
-  };
+  const [step, setStep] = useState<1 | 2 | 0>(1);
 
   const onStepChange = () => {
     setStep((state) => (state === 1 ? 2 : 1));
   };
 
-  useEffect(() => {
-    const timiID = setTimeout(() => setIsCopy(false), 3000);
-    return () => clearTimeout(timiID);
-  }, [isCopy]);
+  const nombreOfLeads = leadData.asArray?.length ?? 0;
 
   return (
     <Dialog>
@@ -88,43 +71,18 @@ export default function Preview({
           <LoaderCircle className="animate-spin" />
         ) : (
           <div>
-            {hasResult ? (
+            {!!leadData.asArray ? (
               <>
                 {step === 1 ? (
                   <div className="relative">
                     <Textarea
-                      value={asSCVText ?? ""}
+                      value={leadData.asCSVText ?? ""}
                       className="h-56 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
                       autoFocus={false}
                       onChange={() => null}
                     />
 
-                    <div className="absolute flex items-center justify-start top-2 right-2 z-10 gap-2">
-                      <Button
-                        onClick={() => onCopy("PHONE")}
-                        className="flex items-center justify-center group"
-                      >
-                        <Phone size={20} className="block group-hover:hidden" />
-                        <span className="hidden group-hover:block">
-                          {isCopy == "PHONE" ? "Copied" : "Copy phone number"}
-                        </span>
-                      </Button>
-
-                      <Button
-                        onClick={() => onCopy("LEADS")}
-                        className="flex items-center justify-center group"
-                      >
-                        <ScrollText
-                          size={20}
-                          className="block group-hover:hidden"
-                        />
-                        <span className="hidden group-hover:block">
-                          {isCopy == "LEADS"
-                            ? "Copied"
-                            : `Copy ${nombreOfLeads > 1 ? "Leads" : "Lead"}`}
-                        </span>
-                      </Button>
-                    </div>
+                    <CopySection />
                   </div>
                 ) : (
                   <Textarea

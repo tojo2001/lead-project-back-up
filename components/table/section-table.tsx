@@ -15,54 +15,9 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { LeadTable } from "./lead-table";
+import CopySection from "../copy-section";
 
-type TProps = {
-  dataTable: IDataContact[] | null;
-};
-
-const data = [
-  {
-    goal: 400,
-  },
-  {
-    goal: 300,
-  },
-  {
-    goal: 200,
-  },
-  {
-    goal: 300,
-  },
-  {
-    goal: 200,
-  },
-  {
-    goal: 278,
-  },
-  {
-    goal: 189,
-  },
-  {
-    goal: 239,
-  },
-  {
-    goal: 300,
-  },
-  {
-    goal: 200,
-  },
-  {
-    goal: 278,
-  },
-  {
-    goal: 189,
-  },
-  {
-    goal: 349,
-  },
-];
-
-export function TableSection({ dataTable }: TProps) {
+export function TableSection() {
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -70,8 +25,9 @@ export function TableSection({ dataTable }: TProps) {
       </DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full max-w-[calc(100%-2rem)]">
-          <LeadTable dataTable={dataTable} />
+          <LeadTable />
         </div>
+        <CopySection className="flex-col items-end top-auto bottom-6" />
       </DrawerContent>
     </Drawer>
   );

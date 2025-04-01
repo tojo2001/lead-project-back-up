@@ -1,6 +1,4 @@
-export function dataToCSVFormat(
-  data: IDataContact[] | null | null
-): string | null {
+export function dataToCSVFormat(data: IDataContact[] | null): string | null {
   if (!data) {
     return null;
   }

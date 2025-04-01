@@ -7,12 +7,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[19];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -48,12 +49,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[19];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -89,12 +91,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[25];
       const Preference = item?.[17];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -130,12 +133,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[12];
       const Preference = item?.[36];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -171,12 +175,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[19];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -212,12 +217,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[19];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -253,12 +259,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[19];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -294,12 +301,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[13];
       const Preference = item?.[41];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -335,12 +343,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[17];
       const Preference = item?.[28];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -376,12 +385,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[12];
       const Preference = item?.[20];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -420,12 +430,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[22];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -463,12 +474,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[19];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -505,12 +517,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[19];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -546,12 +559,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[13];
       const Preference = item?.[44];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -587,12 +601,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[12];
       const Preference = item?.[22];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -628,12 +643,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[19];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -671,12 +687,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[19];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -713,12 +730,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[20];
       const Preference = item?.[21];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -756,12 +774,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[19];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -798,12 +817,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[12];
       const Preference = item?.[22];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -839,12 +859,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[19];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -881,12 +902,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[19];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -923,12 +945,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[19];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -964,12 +987,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[19];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],
@@ -1007,12 +1031,13 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[19];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
 
       return {
-        id: generateNumericId(),
+        id: ID,
 
         created_time: item?.[1],
-        ad_id: item?.[2],
+        ad_id: ID,
         ad_name: item?.[3],
         adset_id: item?.[4],
         adset_name: item?.[5],

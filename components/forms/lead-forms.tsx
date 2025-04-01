@@ -13,17 +13,18 @@ import { pushContactAction } from "@/actions/push-contact.action";
 import { useAuthStore } from "@/store/use-auth.store";
 import { useClientStore } from "@/store/use-client.store";
 import { TableSection } from "../table/section-table";
+import { useLeadStore } from "@/store/use-lead.store";
 
 export default function LeadForm() {
+  const { setLead, resetLead, leadData } = useLeadStore();
   const { authToken } = useAuthStore();
   const { setClient } = useClientStore();
+
   const [section, setSection] = useState<TSection | null>(null);
   const [clientkey, setClientkey] = useState<TClients | null>(null);
   const [leads, setLeads] = useState("");
-  const [dataContact, setDataContact] = useState<IDataContact[] | null>(null);
-  const [dataContactPhoneNumber, setDataContactPhoneNumber] = useState<
-    string[]
-  >([]);
+  const [isOnPreview, setIsOnPreview] = useState(false);
+
   const [pending, setPending] = useState({
     formatting: false,
     processing: false,
@@ -31,8 +32,10 @@ export default function LeadForm() {
   const { toast } = useToast();
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
 
-  const onPreview = async (e: FormEvent<HTMLFormElement>) => {
+  const onProcess = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (isOnPreview) return;
 
     setPending((state) => ({
       ...state,
@@ -46,11 +49,15 @@ export default function LeadForm() {
         leads
       )) as IDataContact[];
 
-      setDataContact(leadsArray);
-
       // get phone number
       const phoneNumbers = leadsArray.map((leads) => leads.TEL2);
-      setDataContactPhoneNumber(phoneNumbers);
+
+      // get leads as csv text
+      const leadAsCSVText = dataToCSVFormat(leadsArray) ?? "";
+
+      setLead(leadsArray, leadAsCSVText, phoneNumbers);
+
+      setIsOnPreview(true);
     } catch (error) {
       toast({
         title: "Something went wrong try again",
@@ -67,12 +74,14 @@ export default function LeadForm() {
     setSection(null);
     setClientkey(null);
     setLeads("");
-    setDataContact(null);
     setClient(null);
+    setIsOnPreview(false);
+
+    resetLead();
   };
 
   const onPush = async () => {
-    if (!dataContact || !authToken) return;
+    if (!leadData.asArray || !authToken) return;
 
     setPending((state) => ({
       ...state,
@@ -82,7 +91,7 @@ export default function LeadForm() {
     try {
       const response = await pushContactAction({
         authToken,
-        dataContacts: dataContact,
+        dataContacts: leadData.asArray,
         campaignSettingId: "test",
       });
 
@@ -107,7 +116,7 @@ export default function LeadForm() {
 
   return (
     <div>
-      <form className="space-y-2 w-[22rem]" onSubmit={onPreview}>
+      <form className="space-y-2 w-[22rem]" onSubmit={onProcess}>
         <ClientDropdownMenu
           clientkey={clientkey}
           setClientkey={setClientkey}
@@ -124,17 +133,9 @@ export default function LeadForm() {
         />
 
         <div className="flex items-center space-x-2">
-          <Preview
-            hasResult={!!dataContact?.length}
-            nombreOfLeads={dataContact?.length ?? 0}
-            asSCVText={dataToCSVFormat(dataContact)}
-            phoneNumber={dataContactPhoneNumber}
-            pending={pending}
-            onPush={onPush}
-            closeBtnRef={closeBtnRef}
-          >
+          <Preview pending={pending} onPush={onPush} closeBtnRef={closeBtnRef}>
             <Button type="submit" disabled={!section || !clientkey || !leads}>
-              Preview
+              {isOnPreview ? "Preview" : "Processe"}
             </Button>
           </Preview>
 
@@ -151,9 +152,9 @@ export default function LeadForm() {
         </div>
       </form>
 
-      {dataContact && (
+      {leadData.asArray?.length! > 0 && (
         <div className="fixed bottom-2 left-1/2 -translate-x-1/2">
-          <TableSection dataTable={dataContact} />
+          <TableSection />
         </div>
       )}
     </div>

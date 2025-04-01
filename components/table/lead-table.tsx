@@ -7,9 +7,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { ChangeEvent, FormEvent, useState } from "react";
+import EditForm from "./edit-form";
+import { useLeadStore } from "@/store/use-lead.store";
+import { dataToCSVFormat } from "@/utils/data-to-csv-format";
 
-type TProps = {
-  dataTable: IDataContact[] | null;
+type EitLocation = {
+  rowID: number;
+  leadKey: string;
+  leadValue: string;
 };
 
 const dataTableHeader = [
@@ -45,14 +57,73 @@ const dataTableHeader = [
   "is_internal",
 ];
 
-export function LeadTable({ dataTable }: TProps) {
+export function LeadTable() {
+  const { setLead, leadData } = useLeadStore();
+
+  // const [data, setData] = useState<IDataContact[] | null>(dataTable);
+  const [editLocation, setEditLocation] = useState<EitLocation | null>(null);
+  const [value, setValue] = useState("");
+
+  const count = leadData.asArray?.length || 0;
+
   const onCopy = (value: string) => {
     window.navigator.clipboard.writeText(value);
   };
 
+  const resetLocation = () => {
+    setEditLocation(null);
+    setValue("");
+  };
+
+  const onEditTrigger = (rowID: number, leadKey: string, leadValue: string) => {
+    setEditLocation({ rowID, leadKey, leadValue });
+  };
+
+  const isTriggered = (rowID: number, leadKey: string, leadValue: string) => {
+    return (
+      editLocation?.rowID == rowID &&
+      editLocation.leadKey == leadKey &&
+      editLocation.leadValue == leadValue
+    );
+  };
+
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
+
+  const onEdit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!value || !leadData.asArray) return;
+
+    const modifiedDataTable = leadData.asArray.map((data, id) => {
+      if (id === editLocation?.rowID && value != "") {
+        return {
+          ...data,
+          [editLocation.leadKey]: value,
+        };
+      } else {
+        return {
+          ...data,
+        };
+      }
+    });
+
+    // get phone number
+    const phoneNumbers = modifiedDataTable.map((leads) => leads.TEL2);
+
+    // get leads as csv text
+    const leadAsCSVText = dataToCSVFormat(modifiedDataTable) ?? "";
+
+    setLead(modifiedDataTable, leadAsCSVText, phoneNumbers);
+    setValue("");
+  };
+
   return (
     <Table>
-      <TableCaption></TableCaption>
+      <TableCaption className="fixed top-[-3rem] right-[1rem]">
+        {count} Lead(s) in total
+      </TableCaption>
       <TableHeader className="sticky top-0 left-0 right-0 bg-background">
         <TableRow>
           {dataTableHeader.map((dataHeader) => (
@@ -61,217 +132,954 @@ export function LeadTable({ dataTable }: TProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {Object.entries(dataTable!).map(([_, data], i) => (
-          <TableRow key={i}>
+        {Object.entries(leadData.asArray!).map(([_, data], rowID) => (
+          <TableRow key={rowID}>
+            {/* id */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.id)}
-              className="cursor-pointer"
+              onDoubleClick={() => onEditTrigger(rowID, "id", data.id)}
+              className="hover:text-muted-foreground"
             >
-              {data.id}
+              {isTriggered(rowID, "id", data.id) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.id}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.id}</>
+              )}
             </TableCell>
+
+            {/* created_time */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.created_time)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "created_time", data.created_time)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.created_time}
+              {isTriggered(rowID, "created_time", data.created_time) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.created_time}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.created_time}</>
+              )}
             </TableCell>
+
+            {/* ad_id */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.ad_id)}
-              className="cursor-pointer"
+              onDoubleClick={() => onEditTrigger(rowID, "ad_id", data.ad_id)}
+              className="hover:text-muted-foreground"
             >
-              {data.ad_id}
+              {isTriggered(rowID, "ad_id", data.ad_id) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.ad_id}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.ad_id}</>
+              )}
             </TableCell>
+
+            {/* ad_name */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.ad_name)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "ad_name", data.ad_name)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.ad_name}
+              {isTriggered(rowID, "ad_name", data.ad_name) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.ad_name}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.ad_name}</>
+              )}
             </TableCell>
+
+            {/* adset_id */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.adset_id)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "adset_id", data.adset_id)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.adset_id}
+              {isTriggered(rowID, "adset_id", data.adset_id) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.adset_id}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.adset_id}</>
+              )}
             </TableCell>
+
+            {/* adset_name */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.adset_name)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "adset_name", data.adset_name)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.adset_name}
+              {isTriggered(rowID, "adset_name", data.adset_name) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.adset_name}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.adset_name}</>
+              )}
             </TableCell>
+
+            {/* campaign_id */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.campaign_id)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "campaign_id", data.campaign_id)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.campaign_id}
+              {isTriggered(rowID, "campaign_id", data.campaign_id) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.campaign_id}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.campaign_id}</>
+              )}
             </TableCell>
+
+            {/* campaign_name */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.campaign_name)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "campaign_name", data.campaign_name)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.campaign_name}
+              {isTriggered(rowID, "campaign_name", data.campaign_name) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.campaign_name}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.campaign_name}</>
+              )}
             </TableCell>
+
+            {/* form_id */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.form_id)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "form_id", data.form_id)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.form_id}
+              {isTriggered(rowID, "form_id", data.form_id) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.form_id}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.form_id}</>
+              )}
             </TableCell>
+
+            {/* form_name */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.form_name)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "form_name", data.form_name)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.form_name}
+              {isTriggered(rowID, "form_name", data.form_name) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.form_name}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.form_name}</>
+              )}
             </TableCell>
+
+            {/* is_organic */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.is_organic)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "is_organic", data.is_organic)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.is_organic}
+              {isTriggered(rowID, "is_organic", data.is_organic) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.is_organic}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.is_organic}</>
+              )}
             </TableCell>
+
+            {/* platform */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.platform)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "platform", data.platform)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.platform}
+              {isTriggered(rowID, "platform", data.platform) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.platform}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.platform}</>
+              )}
             </TableCell>
+
+            {/* email */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.email)}
-              className="cursor-pointer"
+              onDoubleClick={() => onEditTrigger(rowID, "email", data.email)}
+              className="hover:text-muted-foreground"
             >
-              {data.email}
+              {isTriggered(rowID, "email", data.email) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.email}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.email}</>
+              )}
             </TableCell>
+
+            {/* e-mail */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data["e-mail"])}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "e-mail", data["e-mail"])
+              }
+              className="hover:text-muted-foreground"
             >
-              {data["e-mail"]}
+              {isTriggered(rowID, "e-mail", data["e-mail"]) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data["e-mail"]}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data["e-mail"]}</>
+              )}
             </TableCell>
+
+            {/* TEL2 */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.TEL2)}
-              className="cursor-pointer"
+              onDoubleClick={() => onEditTrigger(rowID, "TEL2", data.TEL2)}
+              className="hover:text-muted-foreground"
             >
-              {data.TEL2}
+              {isTriggered(rowID, "TEL2", data.TEL2) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.TEL2}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.TEL2}</>
+              )}
             </TableCell>
+
+            {/* Fournisseur_actuel */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.Fournisseur_actuel)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(
+                  rowID,
+                  "Fournisseur_actuel",
+                  data.Fournisseur_actuel
+                )
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.Fournisseur_actuel}
+              {isTriggered(
+                rowID,
+                "Fournisseur_actuel",
+                data.Fournisseur_actuel
+              ) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.Fournisseur_actuel}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.Fournisseur_actuel}</>
+              )}
             </TableCell>
+
+            {/* CP */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.CP)}
-              className="cursor-pointer"
+              onDoubleClick={() => onEditTrigger(rowID, "CP", data.CP)}
+              className="hover:text-muted-foreground"
             >
-              {data.CP}
+              {isTriggered(rowID, "CP", data.CP) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.CP}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.CP}</>
+              )}
             </TableCell>
+
+            {/* Depuis */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.Depuis)}
-              className="cursor-pointer"
+              onDoubleClick={() => onEditTrigger(rowID, "Depuis", data.Depuis)}
+              className="hover:text-muted-foreground"
             >
-              {data.Depuis}
+              {isTriggered(rowID, "Depuis", data.Depuis) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.Depuis}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.Depuis}</>
+              )}
             </TableCell>
+
+            {/* Options */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.Options)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "Options", data.Options)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.Options}
+              {isTriggered(rowID, "Options", data.Options) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.Options}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.Options}</>
+              )}
             </TableCell>
+
+            {/* Preference */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.Preference)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "Preference", data.Preference)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.Preference}
+              {isTriggered(rowID, "Preference", data.Preference) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.Preference}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.Preference}</>
+              )}
             </TableCell>
+
+            {/* time2call */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.time2call)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "time2call", data.time2call)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.time2call}
+              {isTriggered(rowID, "time2call", data.time2call) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.time2call}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.time2call}</>
+              )}
             </TableCell>
+
+            {/* Prix */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.Prix)}
-              className="cursor-pointer"
+              onDoubleClick={() => onEditTrigger(rowID, "Prix", data.Prix)}
+              className="hover:text-muted-foreground"
             >
-              {data.Prix}
+              {isTriggered(rowID, "Prix", data.Prix) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.Prix}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.Prix}</>
+              )}
             </TableCell>
+
+            {/* Recherche */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.Recherche)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "Recherche", data.Recherche)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.Recherche}
+              {isTriggered(rowID, "Recherche", data.Recherche) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.Recherche}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.Recherche}</>
+              )}
             </TableCell>
+
+            {/* nom */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.nom)}
-              className="cursor-pointer"
+              onDoubleClick={() => onEditTrigger(rowID, "nom", data.nom)}
+              className="hover:text-muted-foreground"
             >
-              {data.nom}
+              {isTriggered(rowID, "nom", data.nom) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.nom}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.nom}</>
+              )}
             </TableCell>
+
+            {/* prenom */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.prenom)}
-              className="cursor-pointer"
+              onDoubleClick={() => onEditTrigger(rowID, "prenom", data.prenom)}
+              className="hover:text-muted-foreground"
             >
-              {data.prenom}
+              {isTriggered(rowID, "prenom", data.prenom) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.prenom}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.prenom}</>
+              )}
             </TableCell>
+
+            {/* Ville */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.Ville)}
-              className="cursor-pointer"
+              onDoubleClick={() => onEditTrigger(rowID, "Ville", data.Ville)}
+              className="hover:text-muted-foreground"
             >
-              {data.Ville}
+              {isTriggered(rowID, "Ville", data.Ville) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.Ville}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.Ville}</>
+              )}
             </TableCell>
+
+            {/* utm_device */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.utm_device)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "utm_device", data.utm_device)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.utm_device}
+              {isTriggered(rowID, "utm_device", data.utm_device) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.utm_device}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.utm_device}</>
+              )}
             </TableCell>
+
+            {/* lead_device */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.lead_device)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "lead_device", data.lead_device)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.lead_device}
+              {isTriggered(rowID, "lead_device", data.lead_device) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.lead_device}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.lead_device}</>
+              )}
             </TableCell>
+
+            {/* operateur_mobile */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.operateur_mobile)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "operateur_mobile", data.operateur_mobile)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.operateur_mobile}
+              {isTriggered(rowID, "operateur_mobile", data.operateur_mobile) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.operateur_mobile}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.operateur_mobile}</>
+              )}
             </TableCell>
+
+            {/* is_internal */}
             <TableCell
-              key={i}
               onClick={() => onCopy(data.is_internal)}
-              className="cursor-pointer"
+              onDoubleClick={() =>
+                onEditTrigger(rowID, "is_internal", data.is_internal)
+              }
+              className="hover:text-muted-foreground"
             >
-              {data.is_internal}
+              {isTriggered(rowID, "is_internal", data.is_internal) ? (
+                <>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <EditForm
+                          placeholder={data.is_internal}
+                          onBlurFn={resetLocation}
+                          value={value}
+                          onChangeFn={changeHandler}
+                          onEditFn={onEdit}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <small>CTRL + V to paste the current value.</small>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </>
+              ) : (
+                <>{data.is_internal}</>
+              )}
             </TableCell>
           </TableRow>
         ))}
