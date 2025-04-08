@@ -163,8 +163,8 @@ export default function Preview({ children, closeBtnRef }: TProps) {
                             leads will be sent has been properly modified.{" "}
                             <br />
                             <i>
-                              (Veuillez vérifier que le ratio d'envoi des leads
-                              a été correctement modifié.)
+                              (Veuillez vérifier que le ratio d&apos;envoi des
+                              leads a été correctement modifié.)
                             </i>
                           </span>
                         </p>
