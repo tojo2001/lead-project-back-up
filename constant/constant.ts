@@ -27,6 +27,10 @@ export const CLIENTS: {
         key: "EUROCRM",
       },
       {
+        name: "EUROCRM MADA",
+        key: "EUROCRM MADA",
+      },
+      {
         name: "ATLAS",
         key: "ATLAS",
       },

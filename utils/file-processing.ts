@@ -171,6 +171,48 @@ export const mapColumnFn = {
       };
     },
 
+    mapColumnEUROCRM_MADA: (item: string[]) => {
+      const Fournisseur_actuel = item?.[15];
+      const Preference = item?.[19];
+      const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const ID = generateNumericId();
+
+      return {
+        id: ID,
+
+        created_time: item?.[1],
+        ad_id: ID,
+        ad_name: item?.[3],
+        adset_id: item?.[4],
+        adset_name: item?.[5],
+        campaign_id: item?.[6],
+        campaign_name: item?.[7],
+        form_id: item?.[8],
+        form_name: item?.[9],
+        is_organic: item?.[10],
+        platform: item?.[11],
+
+        email: item?.[12],
+        "e-mail": item?.[13],
+        TEL2: item?.[14],
+        Fournisseur_actuel,
+        CP: item?.[16],
+        Depuis: item?.[17],
+        Options: item?.[18],
+        Preference: formatedPreference,
+        time2call: item?.[20],
+        Prix: item?.[21],
+        Recherche: item?.[22],
+        nom: item?.[23],
+        prenom: item?.[24],
+        Ville: item?.[25],
+        utm_device: item?.[26],
+        lead_device: item?.[27],
+        operateur_mobile: item?.[28],
+        is_internal: "true",
+      };
+    },
+
     mapColumnATLAS: (item: string[]) => {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[19];

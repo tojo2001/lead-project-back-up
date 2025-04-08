@@ -44,6 +44,13 @@ export async function formatAction(
           mapColumnFn?.[section].mapColumnEUROCRM(lead.split(LEAD_SEPARATOR))
         );
 
+      case "EUROCRM MADA":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnEUROCRM_MADA(
+            lead.split(LEAD_SEPARATOR)
+          )
+        );
+
       case "ATLAS":
         return leadsArray.map((lead) =>
           mapColumnFn?.[section].mapColumnATLAS(lead.split(LEAD_SEPARATOR))

@@ -6,6 +6,7 @@ type TClients =
   | "ADM DAKAR"
   | "ADM"
   | "EUROCRM"
+  | "EUROCRM MADA"
   | "ATLAS"
   | "FEDALA"
   | "MARINA"
@@ -74,3 +75,5 @@ interface IDataContact {
   operateur_mobile: string;
   is_internal: string;
 }
+
+type TMere = "mere1" | "mere2" | "mere3";

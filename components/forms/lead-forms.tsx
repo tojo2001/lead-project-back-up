@@ -10,14 +10,12 @@ import ClientDropdownMenu from "./client-dropdown-menu";
 import { RotateCw } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { pushContactAction } from "@/actions/push-contact.action";
-import { useAuthStore } from "@/store/use-auth.store";
 import { useClientStore } from "@/store/use-client.store";
 import { TableSection } from "../table/section-table";
 import { useLeadStore } from "@/store/use-lead.store";
 
 export default function LeadForm() {
   const { setLead, resetLead, leadData } = useLeadStore();
-  const { authToken } = useAuthStore();
   const { setClient } = useClientStore();
 
   const [section, setSection] = useState<TSection | null>(null);
@@ -25,10 +23,6 @@ export default function LeadForm() {
   const [leads, setLeads] = useState("");
   const [isOnPreview, setIsOnPreview] = useState(false);
 
-  const [pending, setPending] = useState({
-    formatting: false,
-    processing: false,
-  });
   const { toast } = useToast();
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
 
@@ -36,11 +30,6 @@ export default function LeadForm() {
     e.preventDefault();
 
     if (isOnPreview) return;
-
-    setPending((state) => ({
-      ...state,
-      formatting: true,
-    }));
 
     try {
       const leadsArray = (await formatAction(
@@ -63,10 +52,6 @@ export default function LeadForm() {
         title: "Something went wrong try again",
       });
     } finally {
-      setPending((state) => ({
-        ...state,
-        formatting: false,
-      }));
     }
   };
 
@@ -80,40 +65,6 @@ export default function LeadForm() {
     resetLead();
   };
 
-  const onPush = async () => {
-    if (!leadData.asArray || !authToken) return;
-
-    setPending((state) => ({
-      ...state,
-      processing: true,
-    }));
-
-    try {
-      const response = await pushContactAction({
-        authToken,
-        dataContacts: leadData.asArray,
-        campaignSettingId: "test",
-      });
-
-      toast({
-        title: "Pushed to MERE",
-      });
-
-      console.log(response);
-
-      closeBtnRef.current?.click();
-    } catch (error: any) {
-      toast({
-        title: error.message ?? "Something went wrong try again",
-      });
-    } finally {
-      setPending((state) => ({
-        ...state,
-        processing: false,
-      }));
-    }
-  };
-
   return (
     <div>
       <form className="space-y-2 w-[22rem]" onSubmit={onProcess}>
@@ -124,16 +75,23 @@ export default function LeadForm() {
           setSection={setSection}
         />
 
-        <Textarea
-          placeholder="The lead(s) pasted here will be transformed to type MERE."
-          className="resize-none w-full"
-          value={leads}
-          disabled={!clientkey}
-          onChange={(e) => setLeads(e.target.value)}
-        />
+        <div className="relative">
+          <Textarea
+            placeholder="The lead(s) pasted here will be transformed to type MERE."
+            className="resize-none w-full"
+            value={leads}
+            disabled={!clientkey}
+            onChange={(e) => !isOnPreview && setLeads(e.target.value)}
+          />
+          {isOnPreview && (
+            <span className="absolute -bottom-6 right-0 text-xs text-muted-foreground italic">
+              (Preview mode)
+            </span>
+          )}
+        </div>
 
         <div className="flex items-center space-x-2">
-          <Preview pending={pending} onPush={onPush} closeBtnRef={closeBtnRef}>
+          <Preview closeBtnRef={closeBtnRef}>
             <Button type="submit" disabled={!section || !clientkey || !leads}>
               {isOnPreview ? "Preview" : "Processe"}
             </Button>

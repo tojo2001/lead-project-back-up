@@ -1,12 +1,14 @@
+import { LoaderCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
-  ClipboardCheck,
-  ClipboardCopy,
-  LoaderCircle,
-  Phone,
-  ScrollText,
-} from "lucide-react";
-import { Button } from "../ui/button";
-import { MutableRefObject, useEffect, useState } from "react";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import { MutableRefObject, useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -17,39 +19,84 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { toast } from "@/components/ui/use-toast";
 import { Textarea } from "../ui/textarea";
-import { useAuthStore } from "@/store/use-auth.store";
 import { useClientStore } from "@/store/use-client.store";
 import { useLeadStore } from "@/store/use-lead.store";
 import CopySection from "../copy-section";
+import { TriangleAlert } from "lucide-react";
+import { pushContactAction } from "@/actions/push-contact.action";
 
 type TProps = {
   children: React.ReactNode;
-  pending: {
-    formatting: boolean;
-    processing: boolean;
-  };
-  onPush: () => Promise<void>;
   closeBtnRef: MutableRefObject<HTMLButtonElement | null>;
 };
 
-export default function Preview({
-  children,
-  pending,
-  onPush,
-  closeBtnRef,
-}: TProps) {
-  const { authToken, setAuthToken } = useAuthStore();
+export default function Preview({ children, closeBtnRef }: TProps) {
   const { client } = useClientStore();
   const { leadData } = useLeadStore();
+  const [mereType, setMereType] = useState<TMere | null>(null);
+  const [pending, setPending] = useState({
+    formatting: false,
+    processing: false,
+  });
 
   const [step, setStep] = useState<1 | 2 | 0>(1);
 
+  const nombreOfLeads = leadData.asArray?.length ?? 0;
+
   const onStepChange = () => {
     setStep((state) => (state === 1 ? 2 : 1));
+    setMereType(null);
   };
 
-  const nombreOfLeads = leadData.asArray?.length ?? 0;
+  const onMereChange = (value: string) => {
+    setMereType(value as TMere);
+  };
+
+  const onPush = async () => {
+    if (!leadData.asArray || !leadData.asCSVText) return;
+
+    const isConfirmed = confirm(
+      `Are you absolutely sure to push ${leadData.asArray.length} leads(s) to ${mereType} ?`
+    );
+
+    if (!isConfirmed) {
+      setStep(1);
+      return;
+    }
+
+    setPending((state) => ({
+      ...state,
+      processing: true,
+    }));
+
+    try {
+      const { success, message, dataResponse } = await pushContactAction({
+        mereType: "mere2",
+        dataContacts: leadData.asCSVText,
+      });
+
+      if (!success) throw new Error(message);
+
+      toast({
+        title: message,
+      });
+
+      console.log(dataResponse);
+
+      closeBtnRef.current?.click();
+    } catch (error: any) {
+      toast({
+        title: error.message,
+      });
+    } finally {
+      setPending((state) => ({
+        ...state,
+        processing: false,
+      }));
+    }
+  };
 
   return (
     <Dialog>
@@ -85,11 +132,45 @@ export default function Preview({
                     <CopySection />
                   </div>
                 ) : (
-                  <Textarea
-                    placeholder="Auth token"
-                    value={authToken ?? ""}
-                    onChange={(e) => setAuthToken(e.target.value)}
-                  />
+                  <div className="space-y-2">
+                    <Select onValueChange={onMereChange}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Choose type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="mere1">Push to MERE 1</SelectItem>
+                        <SelectItem value="mere2">Push to MERE 2</SelectItem>
+                        <SelectItem value="mere3">Push to MERE 3</SelectItem>
+                      </SelectContent>
+                    </Select>
+
+                    {/* Warning text */}
+                    {!!mereType && (
+                      <div>
+                        <p className="flex items-center justify-start gap-1">
+                          <TriangleAlert
+                            size={14}
+                            className="text-orange-400"
+                          />{" "}
+                          <span className="text-sm text-orange-400 underline">
+                            Warning :
+                          </span>
+                        </p>
+                        <p className="flex items-center justify-start gap-2 text-sm pl-1">
+                          <span className="h-[4.5rem] w-[0.35rem] bg-orange-400" />
+                          <span>
+                            Please double-check that the ratio at which the
+                            leads will be sent has been properly modified.{" "}
+                            <br />
+                            <i>
+                              (Veuillez vérifier que le ratio d'envoi des leads
+                              a été correctement modifié.)
+                            </i>
+                          </span>
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 )}
               </>
             ) : (
@@ -105,29 +186,24 @@ export default function Preview({
             </Button>
           </DialogClose>
 
-          <Button disabled variant="destructive">
-            Proceed to Push
+          <Button onClick={onStepChange}>
+            {step === 1 ? "Continue to Push" : "Return to Preview"}
           </Button>
-          {/* <Button onClick={onStepChange}>{step === 1 ? "Next" : "Prev"}</Button> */}
 
-          {/* {step === 2 && (
+          {step === 2 && (
             <Button
               type="submit"
               variant="destructive"
               className="self-end space-x-1"
-              disabled={!authToken?.trim() || pending.processing}
+              disabled={!mereType || pending.processing}
               onClick={onPush}
             >
               {pending.processing && (
                 <LoaderCircle size="16" className="animate-spin" />
               )}
-              {pending.processing ? (
-                <p>Processing...</p>
-              ) : (
-                <p>Proceed to Push</p>
-              )}
+              {pending.processing ? <p>Processing...</p> : <p>Push</p>}
             </Button>
-          )} */}
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
