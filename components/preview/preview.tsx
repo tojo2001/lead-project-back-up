@@ -30,16 +30,18 @@ import { pushContactAction } from "@/actions/push-contact.action";
 type TProps = {
   children: React.ReactNode;
   closeBtnRef: MutableRefObject<HTMLButtonElement | null>;
+  isProcessing: boolean;
 };
 
-export default function Preview({ children, closeBtnRef }: TProps) {
+export default function Preview({
+  children,
+  closeBtnRef,
+  isProcessing,
+}: TProps) {
   const { client } = useClientStore();
   const { leadData } = useLeadStore();
   const [mereType, setMereType] = useState<TMere | null>(null);
-  const [pending, setPending] = useState({
-    formatting: false,
-    processing: false,
-  });
+  const [isPushing, setIsPushing] = useState(false);
 
   const [step, setStep] = useState<1 | 2 | 0>(1);
 
@@ -66,10 +68,7 @@ export default function Preview({ children, closeBtnRef }: TProps) {
       return;
     }
 
-    setPending((state) => ({
-      ...state,
-      processing: true,
-    }));
+    setIsPushing(true);
 
     try {
       const { success, message, dataResponse } = await pushContactAction({
@@ -91,10 +90,7 @@ export default function Preview({ children, closeBtnRef }: TProps) {
         title: error.message,
       });
     } finally {
-      setPending((state) => ({
-        ...state,
-        processing: false,
-      }));
+      setIsPushing(false);
     }
   };
 
@@ -114,7 +110,7 @@ export default function Preview({ children, closeBtnRef }: TProps) {
             MERE type.
           </DialogDescription>
         </DialogHeader>
-        {pending.formatting ? (
+        {isProcessing ? (
           <LoaderCircle className="animate-spin" />
         ) : (
           <div>
@@ -195,13 +191,11 @@ export default function Preview({ children, closeBtnRef }: TProps) {
               type="submit"
               variant="destructive"
               className="self-end space-x-1"
-              disabled={!mereType || pending.processing}
+              disabled={!mereType || isPushing}
               onClick={onPush}
             >
-              {pending.processing && (
-                <LoaderCircle size="16" className="animate-spin" />
-              )}
-              {pending.processing ? <p>Processing...</p> : <p>Push</p>}
+              {isPushing && <LoaderCircle size="16" className="animate-spin" />}
+              {isPushing ? <p>Processing...</p> : <p>Push</p>}
             </Button>
           )}
         </DialogFooter>

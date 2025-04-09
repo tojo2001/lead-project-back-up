@@ -2,9 +2,9 @@
 
 type TProps = {
   clientkey: TClients | null;
-  section: TSection | null;
   setClientkey: Dispatch<SetStateAction<TClients | null>>;
   setSection: Dispatch<SetStateAction<TSection | null>>;
+  isOnPreview: boolean;
 };
 
 import {
@@ -47,9 +47,9 @@ import { useClientStore } from "@/store/use-client.store";
 
 export default function ClientDropdownMenu({
   clientkey,
-  section,
   setClientkey,
   setSection,
+  isOnPreview,
 }: TProps) {
   const { setClient } = useClientStore();
 
@@ -67,6 +67,7 @@ export default function ClientDropdownMenu({
         <DropdownMenuTrigger asChild>
           <Button
             variant="outline"
+            disabled={isOnPreview}
             className={cn(
               triggerBtnText == "Choose client" ? "animate-pulse" : ""
             )}

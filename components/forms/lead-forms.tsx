@@ -9,7 +9,6 @@ import { dataToCSVFormat } from "@/utils/data-to-csv-format";
 import ClientDropdownMenu from "./client-dropdown-menu";
 import { RotateCw } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import { pushContactAction } from "@/actions/push-contact.action";
 import { useClientStore } from "@/store/use-client.store";
 import { TableSection } from "../table/section-table";
 import { useLeadStore } from "@/store/use-lead.store";
@@ -22,6 +21,7 @@ export default function LeadForm() {
   const [clientkey, setClientkey] = useState<TClients | null>(null);
   const [leads, setLeads] = useState("");
   const [isOnPreview, setIsOnPreview] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const { toast } = useToast();
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -30,6 +30,8 @@ export default function LeadForm() {
     e.preventDefault();
 
     if (isOnPreview) return;
+
+    setIsProcessing(true);
 
     try {
       const leadsArray = (await formatAction(
@@ -52,6 +54,7 @@ export default function LeadForm() {
         title: "Something went wrong try again",
       });
     } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -71,8 +74,8 @@ export default function LeadForm() {
         <ClientDropdownMenu
           clientkey={clientkey}
           setClientkey={setClientkey}
-          section={section}
           setSection={setSection}
+          isOnPreview={isOnPreview}
         />
 
         <div className="relative">
@@ -91,7 +94,7 @@ export default function LeadForm() {
         </div>
 
         <div className="flex items-center space-x-2">
-          <Preview closeBtnRef={closeBtnRef}>
+          <Preview closeBtnRef={closeBtnRef} isProcessing={isProcessing}>
             <Button type="submit" disabled={!section || !clientkey || !leads}>
               {isOnPreview ? "Preview" : "Processe"}
             </Button>
