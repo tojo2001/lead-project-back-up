@@ -160,7 +160,9 @@ const dataTableHeader = [
       "SFR / RED",
       "La moins chère",
       "Le meilleur débit",
-      "Le plus fiable",
+      "La plus fiable",
+      "La plus rapide",
+      "Sans Engagement",
     ],
   },
   {
