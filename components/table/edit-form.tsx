@@ -58,7 +58,7 @@ export default function EditForm({ formtype, formData }: TProps) {
             >
               <SelectValue placeholder={formData[formtype]?.placeholder} />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="max-h-44 h-full overflow-y-auto">
               <SelectGroup>
                 {formData[formtype]?.options.map((opt) => (
                   <SelectItem key={opt} value={opt}>
