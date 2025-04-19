@@ -1,16 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { useLeadStore } from "@/store/use-lead.store";
-import { Phone, ScrollText } from "lucide-react";
+import { Phone, ScrollText, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Preview from "./preview/preview";
 
 type TPros = {
+  hasthirdAction?: boolean;
   className?: string;
 };
 
-export default function CopySection({ className }: TPros) {
-  const [isCopy, setIsCopy] = useState<"PHONE" | "LEADS" | false>(false);
+export default function ActionBtnSection({
+  className,
+  hasthirdAction = false,
+}: TPros) {
   const { leadData } = useLeadStore();
+  const [isCopy, setIsCopy] = useState<"PHONE" | "LEADS" | false>(false);
+  const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+  const btnRef = useRef<HTMLButtonElement | null>(null);
 
   const nombreOfLeads = leadData.asArray?.length ?? 0;
 
@@ -56,6 +63,19 @@ export default function CopySection({ className }: TPros) {
             : `Copy ${nombreOfLeads > 1 ? "Leads" : "Lead"}`}
         </span>
       </Button>
+
+      {hasthirdAction && (
+        <Preview closeBtnRef={closeBtnRef} isProcessing={false} previewStep={2}>
+          <Button
+            ref={btnRef}
+            className="flex items-center justify-center group"
+            variant="destructive"
+          >
+            <Send size={20} className="block group-hover:hidden" />
+            <span className="hidden group-hover:block">Continue to Push</span>
+          </Button>
+        </Preview>
+      )}
     </div>
   );
 }

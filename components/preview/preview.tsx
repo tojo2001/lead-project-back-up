@@ -8,7 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { MutableRefObject, useState } from "react";
+import { MutableRefObject, useEffect, useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -23,7 +23,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Textarea } from "../ui/textarea";
 import { useClientStore } from "@/store/use-client.store";
 import { useLeadStore } from "@/store/use-lead.store";
-import CopySection from "../copy-section";
+import CopySection from "../action-btn-section";
 import { TriangleAlert } from "lucide-react";
 import { pushContactAction } from "@/actions/push-contact.action";
 
@@ -31,19 +31,21 @@ type TProps = {
   children: React.ReactNode;
   closeBtnRef: MutableRefObject<HTMLButtonElement | null>;
   isProcessing: boolean;
+  previewStep: 1 | 2 | 0;
 };
 
 export default function Preview({
   children,
   closeBtnRef,
   isProcessing,
+  previewStep,
 }: TProps) {
   const { client } = useClientStore();
   const { leadData } = useLeadStore();
   const [mereType, setMereType] = useState<TMere | null>(null);
   const [isPushing, setIsPushing] = useState(false);
 
-  const [step, setStep] = useState<1 | 2 | 0>(1);
+  const [step, setStep] = useState<1 | 2 | 0>(previewStep);
 
   const nombreOfLeads = leadData.asArray?.length ?? 0;
 
@@ -96,7 +98,7 @@ export default function Preview({
 
   return (
     <Dialog>
-      <DialogTrigger asChild onClick={() => setStep(1)}>
+      <DialogTrigger asChild onClick={() => setStep(previewStep)}>
         {children}
       </DialogTrigger>
 

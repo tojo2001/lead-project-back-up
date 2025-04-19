@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { formatAction } from "@/actions/format.action";
@@ -22,6 +22,7 @@ export default function LeadForm() {
   const [leads, setLeads] = useState("");
   const [isOnPreview, setIsOnPreview] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const btnRef = useRef<HTMLButtonElement | null>(null);
 
   const { toast } = useToast();
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -94,8 +95,16 @@ export default function LeadForm() {
         </div>
 
         <div className="flex items-center space-x-2">
-          <Preview closeBtnRef={closeBtnRef} isProcessing={isProcessing}>
-            <Button type="submit" disabled={!section || !clientkey || !leads}>
+          <Preview
+            closeBtnRef={closeBtnRef}
+            isProcessing={isProcessing}
+            previewStep={1}
+          >
+            <Button
+              type="submit"
+              ref={btnRef}
+              disabled={!section || !clientkey || !leads}
+            >
               {isOnPreview ? "Preview" : "Processe"}
             </Button>
           </Preview>

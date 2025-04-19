@@ -1,21 +1,9 @@
 "use client";
 
-import * as React from "react";
-import { Minus, Plus } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { LeadTable } from "./lead-table";
-import CopySection from "../copy-section";
+import ActionBtnSection from "../action-btn-section";
 
 export function TableSection() {
   return (
@@ -27,7 +15,10 @@ export function TableSection() {
         <div className="mx-auto w-full max-w-[calc(100%-2rem)]">
           <LeadTable />
         </div>
-        <CopySection className="flex-col items-end top-auto bottom-6" />
+        <ActionBtnSection
+          hasthirdAction={true}
+          className="flex-col items-end top-auto bottom-6"
+        />
       </DrawerContent>
     </Drawer>
   );

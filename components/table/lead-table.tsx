@@ -307,6 +307,7 @@ export function LeadTable() {
       <TableCaption className="fixed top-[-3rem] right-[1rem]">
         {count} Lead(s) in total
       </TableCaption>
+
       <TableHeader className="sticky top-0 left-0 right-0 bg-background">
         <TableRow>
           {dataTableHeader.map((dataHeader) => (
@@ -318,6 +319,7 @@ export function LeadTable() {
           ))}
         </TableRow>
       </TableHeader>
+
       <TableBody>
         {Object.entries(leadData.asArray!).map(([_, data], rowID) => (
           <TableRow key={rowID}>
