@@ -97,7 +97,7 @@ export default function Preview({
   };
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={(open) => !open && setMereType(null)}>
       <DialogTrigger asChild onClick={() => setStep(previewStep)}>
         {children}
       </DialogTrigger>
