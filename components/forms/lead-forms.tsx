@@ -12,6 +12,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { useClientStore } from "@/store/use-client.store";
 import { TableSection } from "../table/section-table";
 import { useLeadStore } from "@/store/use-lead.store";
+import { setCount } from "@/actions/set-count.action";
+// import { seedCampagnes } from "@/actions/set-count.action";
 
 export default function LeadForm() {
   const { setLead, resetLead, leadData } = useLeadStore();
@@ -41,6 +43,10 @@ export default function LeadForm() {
         leads
       )) as IDataContact[];
 
+      if (leadsArray.length > 0 && clientkey) {
+        await setCount(clientkey);
+      }
+
       // get phone number
       const phoneNumbers = leadsArray.map((leads) => leads.TEL2);
 
@@ -68,6 +74,15 @@ export default function LeadForm() {
 
     resetLead();
   };
+
+  // set seedCampagneData
+  // useEffect(() => {
+  //   const seedCamp = async () => {
+  //     await seedCampagnes();
+  //   };
+
+  //   seedCamp();
+  // }, []);
 
   return (
     <div>

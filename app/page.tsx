@@ -1,8 +1,9 @@
+import { Count } from "@/components/count";
 import LeadForm from "@/components/forms/lead-forms";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex items-center justify-center flex-col">
+    <main className="relative min-h-screen flex items-center justify-center flex-col">
       <div className="mb-16">
         <svg height="40" width="250" xmlns="http://www.w3.org/2000/svg">
           <text x="5" y="30" fill="white" font-size="36">
@@ -14,6 +15,7 @@ export default function Home() {
         </svg>
       </div>
       <LeadForm />
+      <Count />
     </main>
   );
 }
