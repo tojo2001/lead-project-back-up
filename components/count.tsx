@@ -26,8 +26,9 @@ export function Count() {
   }, []);
 
   return (
-    <p className="fixed top-2 left-2 text-muted-foreground">
-      {totalCounOfUse} in use
-    </p>
+    <div className="flex items-start flex-col fixed top-2 left-2 text-muted-foreground">
+      <p>{totalCounOfUse} in use</p>
+      <span className="text-[8px] text-muted-foreground">Since 28/04/2025</span>
+    </div>
   );
 }
