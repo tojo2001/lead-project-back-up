@@ -7,7 +7,7 @@ export default function Navbar() {
   const date = new Date();
 
   return (
-    <nav className="fixed w-full flex items-center justify-between md:justify-end p-2 space-x-4">
+    <nav className="fixed w-full flex items-center justify-between md:justify-end p-2 space-x-4 z-10">
       <SignedIn>
         <UserButton />
       </SignedIn>
