@@ -34,6 +34,7 @@ type TClients =
 
   // FREE
   | "PUREPREMIUM"
+  | "VIPP FREE"
 
   // ENERGIE: No type MERE
   | "ADM TOTAL"

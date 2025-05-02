@@ -124,6 +124,10 @@ export const CLIENTS: {
         name: "PUREPREMIUM",
         key: "PUREPREMIUM",
       },
+      {
+        name: "VIPP FREE",
+        key: "VIPP FREE",
+      },
     ],
   },
 
