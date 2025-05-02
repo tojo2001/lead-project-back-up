@@ -1,4 +1,3 @@
-import { Count } from "@/components/count";
 import LeadForm from "@/components/forms/lead-forms";
 
 export default function Home() {
@@ -15,7 +14,6 @@ export default function Home() {
         </svg>
       </div>
       <LeadForm />
-      <Count />
     </main>
   );
 }

@@ -29,7 +29,7 @@ export function Count() {
   }, []);
 
   return (
-    <div className="flex items-start flex-col fixed top-2 left-2 text-muted-foreground">
+    <div className="flex items-start flex-col text-muted-foreground">
       <p className="flex items-center justify-start space-x-1">
         {pendinng ? (
           <Loader className="animate-spin" size={15} />
