@@ -14,9 +14,7 @@ export default function UpdateIndicatorBanner() {
     location.reload();
   };
 
-  if (isUpdated) return null;
-
-  return (
+  return !isUpdated ? (
     <div className="fixed top-2 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between bg-yellow-100 border border-yellow-300 text-yellow-800 rounded-xl p-4 shadow-md w-full max-w-xl mx-auto mt-4">
       <div className="flex items-center space-x-3">
         <AlertCircle className="w-6 h-6 text-yellow-600" />
@@ -32,5 +30,5 @@ export default function UpdateIndicatorBanner() {
         Reload
       </button>
     </div>
-  );
+  ) : null;
 }

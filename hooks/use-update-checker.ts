@@ -6,7 +6,7 @@ const NEXT_PUBLIC_UPDATE_KEY = process.env.NEXT_PUBLIC_UPDATE_KEY!;
 const NEXT_PUBLIC_UPDATE_VALUE = process.env.NEXT_PUBLIC_UPDATE_VALUE!;
 
 export function useUpdateChecker() {
-  const [isUpdated, setIsUpdated] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(true);
 
   useEffect(() => {
     const checkUpdate = () => {
