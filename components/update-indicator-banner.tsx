@@ -1,16 +1,14 @@
 "use client";
 
+import { UPDATE_KEY, UPDATE_VALUE } from "@/constant/constant";
 import { useUpdateChecker } from "@/hooks/use-update-checker";
 import { AlertCircle, RefreshCcw } from "lucide-react";
-
-const NEXT_PUBLIC_UPDATE_KEY = process.env.NEXT_PUBLIC_UPDATE_KEY!;
-const NEXT_PUBLIC_UPDATE_VALUE = process.env.NEXT_PUBLIC_UPDATE_VALUE!;
 
 export default function UpdateIndicatorBanner() {
   const { isUpdated } = useUpdateChecker();
 
   const onReload = () => {
-    localStorage.setItem(NEXT_PUBLIC_UPDATE_KEY, NEXT_PUBLIC_UPDATE_VALUE);
+    localStorage.setItem(UPDATE_KEY, UPDATE_VALUE);
     location.reload();
   };
 
