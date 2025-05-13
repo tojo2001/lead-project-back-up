@@ -468,7 +468,6 @@ export const mapColumnFn = {
   },
 
   ORANGE: {
-    /* DISCONTINUED */
     mapColumnARMATIS: (item: string[]) => {
       const Fournisseur_actuel = item?.[15];
       const Preference = item?.[22];
@@ -500,17 +499,16 @@ export const mapColumnFn = {
         Preference: formatedPreference,
         time2call: "",
         Prix: item?.[25],
-        Recherche: "",
+        Recherche: item?.[32],
         nom: getNomPrenom(""),
         prenom: getNomPrenom(""),
         Ville: "",
-        utm_device: "",
+        utm_device: item?.[33],
         lead_device: "",
-        operateur_mobile: "",
+        operateur_mobile: item?.[31],
         is_internal: "true",
       };
     },
-    /* DISCONTINUED */
 
     /* DISCONTINUED */
     mapColumnTUNIS: (item: string[]) => {

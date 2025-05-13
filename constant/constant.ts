@@ -61,6 +61,10 @@ export const CLIENTS: {
     section: "ORANGE",
     campagne: [
       {
+        name: "ARMATIS",
+        key: "ARMATIS",
+      },
+      {
         name: "DPI",
         key: "DPI",
       },

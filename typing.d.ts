@@ -15,7 +15,7 @@ type TClients =
   | "ALGER"
 
   // ORANGE
-  | "ARMATIS" /* DISCONTINUED */
+  | "ARMATIS"
   | "TUNIS" /* DISCONTINUED */
   | "DPI"
   | "KONECTA"

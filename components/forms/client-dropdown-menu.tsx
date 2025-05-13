@@ -82,9 +82,9 @@ export default function ClientDropdownMenu({
             {triggerBtnText.includes("FREE") && (
               <RadioTower className="mr-2 h-4 w-4" />
             )}
-            {/* {triggerBtnText.includes("ENERGIE") && (
-            <Zap className="mr-2 h-4 w-4" />
-          )} */}
+            {triggerBtnText.includes("ENERGIE") && (
+              <Zap className="mr-2 h-4 w-4" />
+            )}
             {triggerBtnText}
           </Button>
         </DropdownMenuTrigger>
@@ -111,24 +111,22 @@ export default function ClientDropdownMenu({
         <DropdownMenuGroup>
           {CLIENTS.map((client) => (
             <DropdownMenuSub key={client.section}>
-              {client.section != "ENERGIE" && (
-                <DropdownMenuSubTrigger>
-                  {client.section == "BYTEL" && (
-                    <SatelliteDish className="mr-2 h-4 w-4" />
-                  )}
-                  {client.section == "ORANGE" && (
-                    <Antenna className="mr-2 h-4 w-4" />
-                  )}
-                  {client.section == "SFR" && <Rss className="mr-2 h-4 w-4" />}
-                  {client.section == "FREE" && (
-                    <RadioTower className="mr-2 h-4 w-4" />
-                  )}
-                  {client.section == "ENERGIE" && (
-                    <Zap className="mr-2 h-4 w-4" />
-                  )}
-                  <span>{client.section}</span>
-                </DropdownMenuSubTrigger>
-              )}
+              <DropdownMenuSubTrigger disabled={client.section == "ENERGIE"}>
+                {client.section == "BYTEL" && (
+                  <SatelliteDish className="mr-2 h-4 w-4" />
+                )}
+                {client.section == "ORANGE" && (
+                  <Antenna className="mr-2 h-4 w-4" />
+                )}
+                {client.section == "SFR" && <Rss className="mr-2 h-4 w-4" />}
+                {client.section == "FREE" && (
+                  <RadioTower className="mr-2 h-4 w-4" />
+                )}
+                {client.section == "ENERGIE" && (
+                  <Zap className="mr-2 h-4 w-4" />
+                )}
+                <span>{client.section}</span>
+              </DropdownMenuSubTrigger>
 
               <DropdownMenuPortal>
                 <DropdownMenuSubContent>
