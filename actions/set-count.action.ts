@@ -10,7 +10,9 @@ import {
   updateDoc,
   where,
   writeBatch,
-} from "firebase/firestore"; // You need to import these
+} from "firebase/firestore";
+
+const isProd = process.env.NODE_ENV === "production";
 
 async function seedCampagnes() {
   const campagnes = [
@@ -65,6 +67,8 @@ async function seedCampagnes() {
 }
 
 export async function setCount(campagneName: TClients) {
+  if (!isProd) return;
+
   try {
     const campagnesRef = collection(db, "campagnes");
 

@@ -14,7 +14,7 @@ export default function ActionBtnSection({
   className,
   hasthirdAction = false,
 }: TPros) {
-  const { leadData } = useLeadStore();
+  const { leadData, filteredLeadData } = useLeadStore();
   const [isCopy, setIsCopy] = useState<"PHONE" | "LEADS" | false>(false);
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
   const btnRef = useRef<HTMLButtonElement | null>(null);
@@ -24,9 +24,17 @@ export default function ActionBtnSection({
   const onCopy = (key: "PHONE" | "LEADS") => {
     setIsCopy(key);
     key === "LEADS"
-      ? window.navigator.clipboard.writeText(leadData.asCSVText!)
+      ? window.navigator.clipboard.writeText(
+          !!filteredLeadData ? filteredLeadData.asCSVText! : leadData.asCSVText!
+        )
       : window.navigator.clipboard.writeText(
-          JSON.stringify(leadData.phoneNumber, null, 4)
+          JSON.stringify(
+            !!filteredLeadData
+              ? filteredLeadData.phoneNumber
+              : leadData.phoneNumber,
+            null,
+            4
+          )
         );
   };
 
@@ -64,7 +72,7 @@ export default function ActionBtnSection({
         </span>
       </Button>
 
-      {hasthirdAction && (
+      {hasthirdAction && !filteredLeadData && (
         <Preview closeBtnRef={closeBtnRef} isProcessing={false} previewStep={2}>
           <Button
             ref={btnRef}

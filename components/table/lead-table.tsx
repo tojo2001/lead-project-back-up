@@ -12,6 +12,7 @@ import EditForm from "./edit-form";
 import { useLeadStore } from "@/store/use-lead.store";
 import { dataToCSVFormat } from "@/utils/data-to-csv-format";
 import { Pencil } from "lucide-react";
+import FilterSearch from "./filter-search";
 
 type EitLocation = {
   rowID: number;
@@ -228,14 +229,17 @@ const dataTableHeader = [
 ];
 
 export function LeadTable() {
-  const { setLead, leadData } = useLeadStore();
+  const { setLead, leadData, filteredLeadData } = useLeadStore();
 
   // const [data, setData] = useState<IDataContact[] | null>(dataTable);
   const [editLocation, setEditLocation] = useState<EitLocation | null>(null);
   const [value, setValue] = useState("");
   const selectSubmitBtnFormRef = useRef<HTMLButtonElement | null>(null);
 
-  const count = leadData.asArray?.length || 0;
+  const count =
+    (!!filteredLeadData
+      ? filteredLeadData.asArray?.length
+      : leadData.asArray?.length) || 0;
 
   const onCopy = (value: string) => {
     window.navigator.clipboard.writeText(value);
@@ -277,8 +281,6 @@ export function LeadTable() {
 
     if (!value || !leadData.asArray) return;
 
-    console.log({ value });
-
     const modifiedDataTable = leadData.asArray.map((data, id) => {
       if (id === editLocation?.rowID && value != "") {
         return {
@@ -304,7 +306,8 @@ export function LeadTable() {
 
   return (
     <Table>
-      <TableCaption className="fixed top-[-3rem] right-[1rem]">
+      <TableCaption className="flex items-center justify-between fixed top-[-4.5rem] left-0 right-0 px-3 w-full">
+        <FilterSearch />
         {count} Lead(s) in total
       </TableCaption>
 
@@ -321,7 +324,10 @@ export function LeadTable() {
       </TableHeader>
 
       <TableBody>
-        {Object.entries(leadData.asArray!).map(([_, data], rowID) => (
+        {(!!filteredLeadData
+          ? Object.entries(filteredLeadData.asArray!)
+          : Object.entries(leadData.asArray!)
+        ).map(([_, data], rowID) => (
           <TableRow key={rowID}>
             {/* id */}
             <TableCell
