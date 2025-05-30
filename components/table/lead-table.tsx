@@ -11,8 +11,11 @@ import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import EditForm from "./edit-form";
 import { useLeadStore } from "@/store/use-lead.store";
 import { dataToCSVFormat } from "@/utils/data-to-csv-format";
-import { Pencil } from "lucide-react";
+import { Loader2, Pencil, Trash } from "lucide-react";
 import FilterSearch from "./filter-search";
+import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
+import toastify from "@/utils/toastify";
 
 type EitLocation = {
   rowID: number;
@@ -21,6 +24,12 @@ type EitLocation = {
 };
 
 const dataTableHeader = [
+  {
+    key: "cta",
+    value: "",
+    canEdit: false,
+    options: [],
+  },
   {
     key: "id",
     value: "id",
@@ -229,11 +238,12 @@ const dataTableHeader = [
 ];
 
 export function LeadTable() {
-  const { setLead, leadData, filteredLeadData } = useLeadStore();
+  const { setLead, removeLead, leadData, filteredLeadData } = useLeadStore();
 
   // const [data, setData] = useState<IDataContact[] | null>(dataTable);
   const [editLocation, setEditLocation] = useState<EitLocation | null>(null);
   const [value, setValue] = useState("");
+  const [removeItemId, setRemoveItemId] = useState<string | null>(null);
   const selectSubmitBtnFormRef = useRef<HTMLButtonElement | null>(null);
 
   const count =
@@ -304,6 +314,19 @@ export function LeadTable() {
     setValue("");
   };
 
+  const onRemove = async (id: string) => {
+    if (!!removeItemId) return;
+
+    setRemoveItemId(id);
+
+    await new Promise((res) => setTimeout(res, 1000));
+
+    setRemoveItemId(null);
+
+    removeLead(id);
+    toastify("success", `Lead (ID: ${id}) has been successfully removed.`);
+  };
+
   return (
     <Table>
       <TableCaption className="flex items-center justify-between fixed top-[-4.5rem] left-0 right-0 px-3 w-full">
@@ -328,7 +351,29 @@ export function LeadTable() {
           ? Object.entries(filteredLeadData.asArray!)
           : Object.entries(leadData.asArray!)
         ).map(([_, data], rowID) => (
-          <TableRow key={rowID}>
+          <TableRow
+            key={rowID}
+            className={cn(
+              removeItemId === data.id && "opacity-50 bg-destructive/15"
+            )}
+          >
+            {/* CTA BTN */}
+            <TableCell>
+              <Button
+                disabled={removeItemId === data.id}
+                size="icon"
+                variant="ghost"
+                className="bg-accent hover:bg-destructive"
+                onClick={() => onRemove(data.id)}
+              >
+                {removeItemId === data.id ? (
+                  <Loader2 size={16} className="animate-spin" />
+                ) : (
+                  <Trash size={16} />
+                )}
+              </Button>
+            </TableCell>
+
             {/* id */}
             <TableCell
               onDoubleClick={() => onEditTrigger(rowID, "id", data.id)}

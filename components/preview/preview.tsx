@@ -19,13 +19,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { toast } from "@/components/ui/use-toast";
 import { Textarea } from "../ui/textarea";
 import { useClientStore } from "@/store/use-client.store";
 import { useLeadStore } from "@/store/use-lead.store";
 import CopySection from "../action-btn-section";
 import { TriangleAlert } from "lucide-react";
 import { pushContactAction } from "@/actions/push-contact.action";
+import toastify from "@/utils/toastify";
 
 type TProps = {
   children: React.ReactNode;
@@ -80,17 +80,13 @@ export default function Preview({
 
       if (!success) throw new Error(message);
 
-      toast({
-        title: message,
-      });
+      toastify("success", message);
 
       console.log(dataResponse);
 
       closeBtnRef.current?.click();
     } catch (error: any) {
-      toast({
-        title: error.message,
-      });
+      toastify("error", error.message);
     } finally {
       setIsPushing(false);
     }

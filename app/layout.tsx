@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/navbar";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 
 import { ClerkProvider, SignedIn } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
@@ -44,7 +44,7 @@ export default function RootLayout({
               </SignedIn>
             }
             {children}
-            <Toaster />
+            <Toaster position="top-center" duration={3000} />
           </ThemeProvider>
         </body>
       </html>

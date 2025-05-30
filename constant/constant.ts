@@ -1,7 +1,7 @@
 export const LEAD_SEPARATOR = ";";
 export const LEAD_DEVIDER = "\n";
 export const UPDATE_KEY = "LEAD-PROJECT:UPDATE_KEY";
-export const UPDATE_VALUE = "2169d608898a32d389c0";
+export const UPDATE_VALUE = "8e9b208278a59496e9ab";
 export const UPDATE_REFRESH = 30000;
 
 export const CLIENTS: {
