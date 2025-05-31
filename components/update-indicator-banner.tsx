@@ -1,14 +1,14 @@
 "use client";
 
-import { UPDATE_KEY, UPDATE_VALUE } from "@/constant/constant";
+import { UPDATE_KEY } from "@/constant/constant";
 import { useUpdateChecker } from "@/hooks/use-update-checker";
 import { AlertCircle, RefreshCcw } from "lucide-react";
 
 export default function UpdateIndicatorBanner() {
-  const { isUpdated } = useUpdateChecker();
+  const { isUpdated, newVersionKey } = useUpdateChecker();
 
   const onReload = () => {
-    localStorage.setItem(UPDATE_KEY, UPDATE_VALUE);
+    localStorage.setItem(UPDATE_KEY, newVersionKey!);
     location.reload();
   };
 
