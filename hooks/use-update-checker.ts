@@ -6,7 +6,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 export function useUpdateChecker() {
-  const [isUpdated, setIsUpdated] = useState(false);
+  const [isUpdated, setIsUpdated] = useState<boolean | null>(null);
   const [updateInfo, setUpdateInfo] = useState<null | {
     versionKey: string;
     updatedAt: any;
@@ -23,25 +23,14 @@ export function useUpdateChecker() {
       }
     });
 
-    // Cleanup on unmount
     return () => unsubscribe();
   }, []);
 
-  console.log(updateInfo);
-
   useEffect(() => {
-    const checkUpdate = () => {
-      const updateData = localStorage.getItem(UPDATE_KEY);
-      if (updateData === updateInfo?.versionKey) {
-        setIsUpdated(true);
-      } else {
-        setIsUpdated(false);
-      }
-    };
+    if (!updateInfo) return; // avoid early false check
 
-    checkUpdate();
-
-    return () => checkUpdate();
+    const updateData = localStorage.getItem(UPDATE_KEY);
+    setIsUpdated(updateData === updateInfo.versionKey);
   }, [updateInfo]);
 
   return { isUpdated, newVersionKey: updateInfo?.versionKey };

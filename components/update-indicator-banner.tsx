@@ -7,6 +7,8 @@ import { AlertCircle, RefreshCcw } from "lucide-react";
 export default function UpdateIndicatorBanner() {
   const { isUpdated, newVersionKey } = useUpdateChecker();
 
+  if (isUpdated == null) return null;
+
   const onReload = () => {
     localStorage.setItem(UPDATE_KEY, newVersionKey!);
     location.reload();
