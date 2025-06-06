@@ -114,6 +114,11 @@ export async function formatAction(
           mapColumnFn?.[section].mapColumnTERSEA(lead.split(LEAD_SEPARATOR))
         );
 
+      case "CASABLANCA":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnCASABLANCA(lead.split(LEAD_SEPARATOR))
+        );
+
       default:
         return null;
     }

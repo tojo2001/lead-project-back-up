@@ -16,6 +16,8 @@ import FilterSearch from "./filter-search";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import toastify from "@/utils/toastify";
+import { Checkbox } from "../ui/checkbox";
+import { CheckedState } from "@radix-ui/react-checkbox";
 
 type EitLocation = {
   rowID: number;
@@ -24,12 +26,6 @@ type EitLocation = {
 };
 
 const dataTableHeader = [
-  {
-    key: "cta",
-    value: "",
-    canEdit: false,
-    options: [],
-  },
   {
     key: "id",
     value: "id",
@@ -244,12 +240,18 @@ export function LeadTable() {
   const [editLocation, setEditLocation] = useState<EitLocation | null>(null);
   const [value, setValue] = useState("");
   const [removeItemId, setRemoveItemId] = useState<string | null>(null);
+  const [selectedLead, setSelectedLead] = useState<string[]>([]);
   const selectSubmitBtnFormRef = useRef<HTMLButtonElement | null>(null);
 
   const count =
     (!!filteredLeadData
       ? filteredLeadData.asArray?.length
       : leadData.asArray?.length) || 0;
+
+  const idLeads =
+    (!!filteredLeadData
+      ? filteredLeadData.asArray?.map((lead) => lead.id)
+      : leadData.asArray?.map((lead) => lead.id)) || [];
 
   const onCopy = (value: string) => {
     window.navigator.clipboard.writeText(value);
@@ -319,12 +321,28 @@ export function LeadTable() {
 
     setRemoveItemId(id);
 
-    await new Promise((res) => setTimeout(res, 1000));
+    await new Promise((res) => setTimeout(res, 100));
 
     setRemoveItemId(null);
 
     removeLead(id);
     toastify("success", `Lead (ID: ${id}) has been successfully removed.`);
+  };
+
+  const onSelectLead = (
+    CheckedState: CheckedState,
+    id: string,
+    isAll: boolean = false
+  ) => {
+    if (isAll) {
+      setSelectedLead(() => (CheckedState == true ? idLeads : []));
+
+      return;
+    }
+
+    setSelectedLead((prev) =>
+      CheckedState == true ? [...prev, id] : prev.filter((p) => p != id)
+    );
   };
 
   return (
@@ -336,6 +354,18 @@ export function LeadTable() {
 
       <TableHeader className="sticky top-0 left-0 right-0 bg-background">
         <TableRow>
+          <TableHead>
+            <Checkbox
+              onCheckedChange={(CheckedState) =>
+                onSelectLead(CheckedState, "", true)
+              }
+            />
+          </TableHead>
+          <TableHead className="relative">
+            <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-lg">
+              #
+            </p>
+          </TableHead>
           {dataTableHeader.map((dataHeader) => (
             <TableHead key={dataHeader.key}>
               <p className="flex items-center gap-2 text-nowrap">
@@ -357,6 +387,16 @@ export function LeadTable() {
               removeItemId === data.id && "opacity-50 bg-destructive/15"
             )}
           >
+            {/* SELECT */}
+            <TableCell>
+              <Checkbox
+                onCheckedChange={(CheckedState) =>
+                  onSelectLead(CheckedState, data.id)
+                }
+                checked={selectedLead.includes(data.id)}
+              />
+            </TableCell>
+
             {/* CTA BTN */}
             <TableCell>
               <Button

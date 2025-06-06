@@ -21,6 +21,7 @@ type TClients =
   | "KONECTA"
   | "SATEL"
   | "TERSEA"
+  | "CASABLANCA"
 
   // SFR
   | "MASTER SFR"

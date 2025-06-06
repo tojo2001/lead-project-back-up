@@ -21,11 +21,11 @@ export const CLIENTS: {
         key: "ADM DAKAR",
       },
       {
-        name: "ADM",
+        name: "ADM OUDJA",
         key: "ADM",
       },
       {
-        name: "EUROCRM",
+        name: "EUROCRM FIBRE",
         key: "EUROCRM",
       },
       {
@@ -81,6 +81,10 @@ export const CLIENTS: {
       {
         name: "TERSEA",
         key: "TERSEA",
+      },
+      {
+        name: "CASABLANCA",
+        key: "CASABLANCA",
       },
     ],
   },
