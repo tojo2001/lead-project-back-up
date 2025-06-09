@@ -12,6 +12,10 @@ import { useLeadStore } from "@/store/use-lead.store";
 import { Button } from "../ui/button";
 import { dataToCSVFormat } from "@/utils/data-to-csv-format";
 
+type TProps = {
+  onRemove: (id: string | string[]) => Promise<void>;
+};
+
 const searchFilterMetaData = [
   {
     key: "platform",
@@ -35,9 +39,15 @@ const searchFilterMetaData = [
   },
 ];
 
-export default function FilterSearch() {
-  const { leadData, filteredLeadData, setFilterLead, resetFilterLead } =
-    useLeadStore();
+export default function FilterSearch({ onRemove }: TProps) {
+  const {
+    leadData,
+    filteredLeadData,
+    setFilterLead,
+    resetFilterLead,
+    selectedLead,
+    onSelectLead,
+  } = useLeadStore();
   const [searchKey, setSearchKey] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -96,60 +106,77 @@ export default function FilterSearch() {
 
   return (
     <div>
-      <form>
-        <div className="flex items-center justify-center space-x-2">
-          <div className="relative w-80">
-            <Input
-              placeholder={
-                !!searchKey
-                  ? `Search by ${
-                      searchFilterMetaData.find((m) => m.key == searchKey)!
-                        .value
-                    }`
-                  : "Search filter"
-              }
-              value={searchTerm}
-              onChange={onSearchtermChange}
-            />
-            <span
-              className="absolute right-2 top-1/2 -translate-y-1/2"
-              onClick={onClear}
-            >
-              {searchTerm ? (
-                <X size={18} className="cursor-pointer" />
-              ) : (
-                <Search size={18} />
-              )}
-            </span>
-          </div>
+      <div className="flex items-center js space-x-4">
+        <form>
+          <div className="flex items-center justify-center space-x-2">
+            <div className="relative w-80">
+              <Input
+                placeholder={
+                  !!searchKey
+                    ? `Search by ${
+                        searchFilterMetaData.find((m) => m.key == searchKey)!
+                          .value
+                      }`
+                    : "Search filter"
+                }
+                value={searchTerm}
+                onChange={onSearchtermChange}
+              />
+              <span
+                className="absolute right-2 top-1/2 -translate-y-1/2"
+                onClick={onClear}
+              >
+                {searchTerm ? (
+                  <X size={18} className="cursor-pointer" />
+                ) : (
+                  <Search size={18} />
+                )}
+              </span>
+            </div>
 
-          {!searchKey ? (
-            <Select onValueChange={onSearchKeyChange}>
-              <SelectTrigger className="w-36">
-                <Filter size="16" />
-                <SelectValue placeholder="Default" />
-              </SelectTrigger>
-              <SelectContent>
-                {searchFilterMetaData.map((metadata) => (
-                  <SelectItem key={metadata.key} value={metadata.key}>
-                    {metadata.value}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          ) : (
-            <Button
-              type="button"
-              className="space-x-2"
-              variant="destructive"
-              onClick={onResset}
-            >
-              <span>Clear filter</span>
-              <FilterX size="16" />
+            {!searchKey ? (
+              <Select onValueChange={onSearchKeyChange}>
+                <SelectTrigger className="w-36">
+                  <Filter size="16" />
+                  <SelectValue placeholder="Default" />
+                </SelectTrigger>
+                <SelectContent>
+                  {searchFilterMetaData.map((metadata) => (
+                    <SelectItem key={metadata.key} value={metadata.key}>
+                      {metadata.value}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            ) : (
+              <Button
+                type="button"
+                className="space-x-2"
+                variant="destructive"
+                onClick={onResset}
+              >
+                <span>Clear filter</span>
+                <FilterX size="16" />
+              </Button>
+            )}
+          </div>
+        </form>
+
+        {!!selectedLead.length && (
+          <div>
+            <Button onClick={() => onRemove(selectedLead)}>
+              Clear Selected Lead{selectedLead.length > 1 && "s"} (
+              {selectedLead.length})
             </Button>
-          )}
-        </div>
-      </form>
+            <Button
+              variant="link"
+              onClick={() => onSelectLead(false, "", true)}
+            >
+              Unselect All
+            </Button>
+          </div>
+        )}
+      </div>
 
       {!!filteredLeadData && filteredLeadData.asArray?.length == 0 && (
         <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center p-8 border border-dashed border-neutral-200 rounded-3xl bg-white text-center shadow-xl transition-all animate-fade-in">
