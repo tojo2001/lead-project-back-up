@@ -18,12 +18,20 @@ type TProps = {
 
 const searchFilterMetaData = [
   {
+    key: "id",
+    value: "ID",
+  },
+  {
     key: "platform",
     value: "Platform",
   },
   {
     key: "Fournisseur_actuel",
     value: "Fournisseur",
+  },
+  {
+    key: "form_name",
+    value: "Source",
   },
   {
     key: "Preference",
@@ -36,6 +44,10 @@ const searchFilterMetaData = [
   {
     key: "operateur_mobile",
     value: "Operateur",
+  },
+  {
+    key: "TEL2",
+    value: "Phone",
   },
 ];
 
