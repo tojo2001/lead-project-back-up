@@ -13,6 +13,7 @@ type TClients =
   | "VIPP"
   | "WEBHELP"
   | "ALGER"
+  | "QUALITY CENTER"
 
   // ORANGE
   | "ARMATIS"

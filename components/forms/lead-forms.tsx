@@ -16,7 +16,7 @@ import { setCount } from "@/actions/set-count.action";
 // import { seedCampagnes } from "@/actions/set-count.action";
 
 export default function LeadForm() {
-  const { setLead, resetLead, leadData } = useLeadStore();
+  const { setLead, resetLead, leadData, onSelectLead } = useLeadStore();
   const { setClient } = useClientStore();
 
   const [section, setSection] = useState<TSection | null>(null);
@@ -71,6 +71,7 @@ export default function LeadForm() {
     setLeads("");
     setClient(null);
     setIsOnPreview(false);
+    onSelectLead(false, "", true);
 
     resetLead();
   };

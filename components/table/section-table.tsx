@@ -16,6 +16,7 @@ export function TableSection() {
   const onClose = () => {
     if (!filteredLeadData) return;
     resetFilterLead();
+
     setTimeout(
       () =>
         toast({

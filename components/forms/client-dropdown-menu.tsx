@@ -131,6 +131,7 @@ export default function ClientDropdownMenu({
               <DropdownMenuPortal>
                 <DropdownMenuSubContent>
                   <DropdownMenuRadioGroup
+                    className="max-h-44 h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-transparent"
                     value={clientkey as TClients}
                     onValueChange={(value) =>
                       onSelect(value as TClients, client.section as TSection)

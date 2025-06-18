@@ -56,6 +56,10 @@ export const CLIENTS: {
         name: "ALGER",
         key: "ALGER",
       },
+      {
+        name: "QUALITY CENTER",
+        key: "QUALITY CENTER",
+      },
     ],
   },
 

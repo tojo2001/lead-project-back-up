@@ -76,6 +76,13 @@ export async function formatAction(
           mapColumnFn?.[section].mapColumnALGER(lead.split(LEAD_SEPARATOR))
         );
 
+      case "QUALITY CENTER":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnQUALITY_CENTER(
+            lead.split(LEAD_SEPARATOR)
+          )
+        );
+
       default:
         return null;
     }
