@@ -129,6 +129,7 @@ const dataTableHeader = [
       "Aucun",
       "SFR",
       "SFR / RED",
+      "Autre",
     ],
   },
   {
@@ -168,6 +169,7 @@ const dataTableHeader = [
       "La plus fiable",
       "La plus rapide",
       "Sans Engagement",
+      "Autre",
     ],
   },
   {
