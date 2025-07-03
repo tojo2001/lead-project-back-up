@@ -29,6 +29,7 @@ type TClients =
   | "AFFINICIA" /* DISCONTINUED */
   | "K SFR"
   | "RIGHTPLACE"
+  | "QC SFR"
   | "W AGADIR"
   | "W DAKAR"
   | "W FES"

@@ -113,6 +113,10 @@ export const CLIENTS: {
         key: "RIGHTPLACE",
       },
       {
+        name: "QUALITY CENTER SFR",
+        key: "QC SFR",
+      },
+      {
         name: "AGADIR",
         key: "W AGADIR",
       },

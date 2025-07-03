@@ -154,6 +154,11 @@ export async function formatAction(
           mapColumnFn?.[section].mapColumnRIGHTPLACE(lead.split(LEAD_SEPARATOR))
         );
 
+      case "QC SFR":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnQC_SFR(lead.split(LEAD_SEPARATOR))
+        );
+
       case "W AGADIR":
         return leadsArray.map((lead) =>
           mapColumnFn?.[section].mapColumnW_AGADIR(lead.split(LEAD_SEPARATOR))
