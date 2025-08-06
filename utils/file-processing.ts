@@ -642,6 +642,9 @@ export const mapColumnFn = {
       const Fournisseur_actuel = item?.[13];
       const Preference = item?.[44];
       const formatedPreference = getPreference(Fournisseur_actuel, Preference);
+      const formatedCP = (CP1: string, CP2: string) => {
+        return CP1 !== "" ? CP1 : CP2;
+      };
       const ID = generateNumericId();
 
       return {
@@ -663,7 +666,7 @@ export const mapColumnFn = {
         "e-mail": item?.[23],
         TEL2: item?.[24],
         Fournisseur_actuel,
-        CP: item?.[20],
+        CP: formatedCP(item?.[20], item?.[21]),
         Depuis: item?.[16],
         Options: item?.[39],
         Preference: formatedPreference,
