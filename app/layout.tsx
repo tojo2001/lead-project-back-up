@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 
 import { ClerkProvider, SignedIn } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,6 +15,9 @@ export const metadata: Metadata = {
   title: "Lead Project 1.0",
   description:
     "Developed to streamline and simplify complex file processing tasks.",
+  other: {
+    "google-adsense-account": "ca-pub-5906051574535378",
+  },
 };
 
 export default function RootLayout({
@@ -32,6 +36,11 @@ export default function RootLayout({
     >
       <html lang="en">
         <body className={inter.className}>
+          <Script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5906051574535378"
+            crossOrigin="anonymous"
+          />
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
