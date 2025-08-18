@@ -26,21 +26,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider
-      appearance={{
-        baseTheme: dark,
-        layout: {
-          unsafe_disableDevelopmentModeWarnings: true,
-        },
-      }}
-    >
-      <html lang="en">
-        <body className={inter.className}>
-          <Script
-            async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5906051574535378"
-            crossOrigin="anonymous"
-          />
+    <html lang="en">
+      <body className={inter.className}>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5906051574535378"
+          crossOrigin="anonymous"
+        />
+        <ClerkProvider
+          appearance={{
+            baseTheme: dark,
+            layout: {
+              unsafe_disableDevelopmentModeWarnings: true,
+            },
+          }}
+        >
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -55,8 +55,8 @@ export default function RootLayout({
             {children}
             <Toaster position="top-center" duration={3000} />
           </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }
