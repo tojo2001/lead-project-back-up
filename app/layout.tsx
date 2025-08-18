@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ClerkProvider, SignedIn } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import Script from "next/script";
+import AdsterraBanner from "@/components/adsterra-banner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,6 +45,7 @@ export default function RootLayout({
                 <Navbar />
               </SignedIn>
             }
+            <AdsterraBanner />
             {children}
             <Toaster position="top-center" duration={3000} />
           </ThemeProvider>
