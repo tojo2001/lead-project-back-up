@@ -13,11 +13,13 @@ import { useClientStore } from "@/store/use-client.store";
 import { TableSection } from "../table/section-table";
 import { useLeadStore } from "@/store/use-lead.store";
 import { setCount } from "@/actions/set-count.action";
+import { useUpdateChecker } from "@/hooks/use-update-checker";
 // import { seedCampagnes } from "@/actions/set-count.action";
 
 export default function LeadForm() {
   const { setLead, resetLead, leadData, onSelectLead } = useLeadStore();
   const { setClient } = useClientStore();
+  const { isUpdated } = useUpdateChecker();
 
   const [section, setSection] = useState<TSection | null>(null);
   const [clientkey, setClientkey] = useState<TClients | null>(null);
@@ -32,7 +34,7 @@ export default function LeadForm() {
   const onProcess = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (isOnPreview) return;
+    if (isOnPreview || !isUpdated) return;
 
     setIsProcessing(true);
 
@@ -119,7 +121,7 @@ export default function LeadForm() {
             <Button
               type="submit"
               ref={btnRef}
-              disabled={!section || !clientkey || !leads}
+              disabled={!section || !clientkey || !leads || !isUpdated}
             >
               {isOnPreview ? "Preview" : "Processe"}
             </Button>
