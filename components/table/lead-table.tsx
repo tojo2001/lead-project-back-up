@@ -315,6 +315,14 @@ export function LeadTable() {
     // get leads as csv text
     const leadAsCSVText = dataToCSVFormat(modifiedDataTable) ?? "";
 
+    // notify user
+    toastify(
+      "success",
+      `Lead (ID: ${
+        modifiedDataTable[editLocation!.rowID].id
+      }) has been successfully edited.`
+    );
+
     setLead(modifiedDataTable, leadAsCSVText, phoneNumbers);
     setValue("");
   };
