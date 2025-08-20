@@ -43,8 +43,6 @@ export default function ActionBtnSection({
     return () => clearTimeout(timiID);
   }, [isCopy]);
 
-  console.log(filteredLeadData);
-
   return (
     <div
       className={cn(

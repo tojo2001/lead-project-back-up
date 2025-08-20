@@ -19,7 +19,7 @@ import toastify from "@/utils/toastify";
 import { Checkbox } from "../ui/checkbox";
 
 type EitLocation = {
-  rowID: number;
+  leadID: string;
   leadKey: string;
   leadValue: string;
 };
@@ -269,14 +269,18 @@ export function LeadTable() {
     setValue("");
   };
 
-  const onEditTrigger = (rowID: number, leadKey: string, leadValue: string) => {
+  const onEditTrigger = (
+    leadID: string,
+    leadKey: string,
+    leadValue: string
+  ) => {
     if (!dataTableHeader.find((d) => d.key == leadKey)?.canEdit) return;
-    setEditLocation({ rowID, leadKey, leadValue });
+    setEditLocation({ leadID, leadKey, leadValue });
   };
 
-  const isTriggered = (rowID: number, leadKey: string, leadValue: string) => {
+  const isTriggered = (leadID: string, leadKey: string, leadValue: string) => {
     return (
-      editLocation?.rowID == rowID &&
+      editLocation?.leadID == leadID &&
       editLocation.leadKey == leadKey &&
       editLocation.leadValue == leadValue
     );
@@ -296,8 +300,8 @@ export function LeadTable() {
 
     if (!value || !leadData.asArray) return;
 
-    const modifiedDataTable = leadData.asArray.map((data, id) => {
-      if (id === editLocation?.rowID && value != "") {
+    const modifiedDataTable = leadData.asArray.map((data, _id) => {
+      if (data.id === editLocation?.leadID && value != "") {
         return {
           ...data,
           [editLocation.leadKey]: value,
@@ -318,9 +322,7 @@ export function LeadTable() {
     // notify user
     toastify(
       "success",
-      `Lead (ID: ${
-        modifiedDataTable[editLocation!.rowID].id
-      }) has been successfully edited.`
+      `Lead (ID: ${editLocation!.leadID}) has been successfully edited.`
     );
 
     setLead(modifiedDataTable, leadAsCSVText, phoneNumbers);
@@ -434,10 +436,10 @@ export function LeadTable() {
 
               {/* id */}
               <TableCell
-                onDoubleClick={() => onEditTrigger(rowID, "id", data.id)}
+                onDoubleClick={() => onEditTrigger(data.id, "id", data.id)}
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "id", data.id) ? (
+                {isTriggered(data.ad_id, "id", data.id) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -458,11 +460,11 @@ export function LeadTable() {
               {/* created_time */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "created_time", data.created_time)
+                  onEditTrigger(data.id, "created_time", data.created_time)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "created_time", data.created_time) ? (
+                {isTriggered(data.ad_id, "created_time", data.created_time) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -484,10 +486,12 @@ export function LeadTable() {
 
               {/* ad_id */}
               <TableCell
-                onDoubleClick={() => onEditTrigger(rowID, "ad_id", data.ad_id)}
+                onDoubleClick={() =>
+                  onEditTrigger(data.id, "ad_id", data.ad_id)
+                }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "ad_id", data.ad_id) ? (
+                {isTriggered(data.ad_id, "ad_id", data.ad_id) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -508,11 +512,11 @@ export function LeadTable() {
               {/* ad_name */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "ad_name", data.ad_name)
+                  onEditTrigger(data.id, "ad_name", data.ad_name)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "ad_name", data.ad_name) ? (
+                {isTriggered(data.ad_id, "ad_name", data.ad_name) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -533,11 +537,11 @@ export function LeadTable() {
               {/* adset_id */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "adset_id", data.adset_id)
+                  onEditTrigger(data.id, "adset_id", data.adset_id)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "adset_id", data.adset_id) ? (
+                {isTriggered(data.ad_id, "adset_id", data.adset_id) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -558,11 +562,11 @@ export function LeadTable() {
               {/* adset_name */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "adset_name", data.adset_name)
+                  onEditTrigger(data.id, "adset_name", data.adset_name)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "adset_name", data.adset_name) ? (
+                {isTriggered(data.ad_id, "adset_name", data.adset_name) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -585,11 +589,11 @@ export function LeadTable() {
               {/* campaign_id */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "campaign_id", data.campaign_id)
+                  onEditTrigger(data.id, "campaign_id", data.campaign_id)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "campaign_id", data.campaign_id) ? (
+                {isTriggered(data.ad_id, "campaign_id", data.campaign_id) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -612,11 +616,15 @@ export function LeadTable() {
               {/* campaign_name */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "campaign_name", data.campaign_name)
+                  onEditTrigger(data.id, "campaign_name", data.campaign_name)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "campaign_name", data.campaign_name) ? (
+                {isTriggered(
+                  data.ad_id,
+                  "campaign_name",
+                  data.campaign_name
+                ) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -639,11 +647,11 @@ export function LeadTable() {
               {/* form_id */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "form_id", data.form_id)
+                  onEditTrigger(data.id, "form_id", data.form_id)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "form_id", data.form_id) ? (
+                {isTriggered(data.ad_id, "form_id", data.form_id) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -664,11 +672,11 @@ export function LeadTable() {
               {/* form_name */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "form_name", data.form_name)
+                  onEditTrigger(data.id, "form_name", data.form_name)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "form_name", data.form_name) ? (
+                {isTriggered(data.ad_id, "form_name", data.form_name) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -689,11 +697,11 @@ export function LeadTable() {
               {/* is_organic */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "is_organic", data.is_organic)
+                  onEditTrigger(data.id, "is_organic", data.is_organic)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "is_organic", data.is_organic) ? (
+                {isTriggered(data.ad_id, "is_organic", data.is_organic) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -716,11 +724,11 @@ export function LeadTable() {
               {/* platform */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "platform", data.platform)
+                  onEditTrigger(data.id, "platform", data.platform)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "platform", data.platform) ? (
+                {isTriggered(data.ad_id, "platform", data.platform) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -740,10 +748,12 @@ export function LeadTable() {
 
               {/* email */}
               <TableCell
-                onDoubleClick={() => onEditTrigger(rowID, "email", data.email)}
+                onDoubleClick={() =>
+                  onEditTrigger(data.id, "email", data.email)
+                }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "email", data.email) ? (
+                {isTriggered(data.ad_id, "email", data.email) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -764,11 +774,11 @@ export function LeadTable() {
               {/* e-mail */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "e-mail", data["e-mail"])
+                  onEditTrigger(data.id, "e-mail", data["e-mail"])
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "e-mail", data["e-mail"]) ? (
+                {isTriggered(data.ad_id, "e-mail", data["e-mail"]) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -788,10 +798,10 @@ export function LeadTable() {
 
               {/* TEL2 */}
               <TableCell
-                onDoubleClick={() => onEditTrigger(rowID, "TEL2", data.TEL2)}
+                onDoubleClick={() => onEditTrigger(data.id, "TEL2", data.TEL2)}
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "TEL2", data.TEL2) ? (
+                {isTriggered(data.ad_id, "TEL2", data.TEL2) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -813,7 +823,7 @@ export function LeadTable() {
               <TableCell
                 onDoubleClick={() =>
                   onEditTrigger(
-                    rowID,
+                    data.id,
                     "Fournisseur_actuel",
                     data.Fournisseur_actuel
                   )
@@ -821,7 +831,7 @@ export function LeadTable() {
                 className="hover:text-muted-foreground"
               >
                 {isTriggered(
-                  rowID,
+                  data.id,
                   "Fournisseur_actuel",
                   data.Fournisseur_actuel
                 ) ? (
@@ -848,10 +858,10 @@ export function LeadTable() {
 
               {/* CP */}
               <TableCell
-                onDoubleClick={() => onEditTrigger(rowID, "CP", data.CP)}
+                onDoubleClick={() => onEditTrigger(data.id, "CP", data.CP)}
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "CP", data.CP) ? (
+                {isTriggered(data.ad_id, "CP", data.CP) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -872,11 +882,11 @@ export function LeadTable() {
               {/* Depuis */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "Depuis", data.Depuis)
+                  onEditTrigger(data.id, "Depuis", data.Depuis)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "Depuis", data.Depuis) ? (
+                {isTriggered(data.ad_id, "Depuis", data.Depuis) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -897,11 +907,11 @@ export function LeadTable() {
               {/* Options */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "Options", data.Options)
+                  onEditTrigger(data.id, "Options", data.Options)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "Options", data.Options) ? (
+                {isTriggered(data.ad_id, "Options", data.Options) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -922,11 +932,11 @@ export function LeadTable() {
               {/* Preference */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "Preference", data.Preference)
+                  onEditTrigger(data.id, "Preference", data.Preference)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "Preference", data.Preference) ? (
+                {isTriggered(data.ad_id, "Preference", data.Preference) ? (
                   <EditForm
                     formtype="select"
                     formData={{
@@ -951,11 +961,11 @@ export function LeadTable() {
               {/* time2call */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "time2call", data.time2call)
+                  onEditTrigger(data.id, "time2call", data.time2call)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "time2call", data.time2call) ? (
+                {isTriggered(data.ad_id, "time2call", data.time2call) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -975,10 +985,10 @@ export function LeadTable() {
 
               {/* Prix */}
               <TableCell
-                onDoubleClick={() => onEditTrigger(rowID, "Prix", data.Prix)}
+                onDoubleClick={() => onEditTrigger(data.id, "Prix", data.Prix)}
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "Prix", data.Prix) ? (
+                {isTriggered(data.ad_id, "Prix", data.Prix) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -999,11 +1009,11 @@ export function LeadTable() {
               {/* Recherche */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "Recherche", data.Recherche)
+                  onEditTrigger(data.id, "Recherche", data.Recherche)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "Recherche", data.Recherche) ? (
+                {isTriggered(data.ad_id, "Recherche", data.Recherche) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -1023,10 +1033,10 @@ export function LeadTable() {
 
               {/* nom */}
               <TableCell
-                onDoubleClick={() => onEditTrigger(rowID, "nom", data.nom)}
+                onDoubleClick={() => onEditTrigger(data.id, "nom", data.nom)}
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "nom", data.nom) ? (
+                {isTriggered(data.ad_id, "nom", data.nom) ? (
                   <EditForm
                     formtype="select"
                     formData={{
@@ -1049,11 +1059,11 @@ export function LeadTable() {
               {/* prenom */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "prenom", data.prenom)
+                  onEditTrigger(data.id, "prenom", data.prenom)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "prenom", data.prenom) ? (
+                {isTriggered(data.ad_id, "prenom", data.prenom) ? (
                   <EditForm
                     formtype="select"
                     formData={{
@@ -1075,10 +1085,12 @@ export function LeadTable() {
 
               {/* Ville */}
               <TableCell
-                onDoubleClick={() => onEditTrigger(rowID, "Ville", data.Ville)}
+                onDoubleClick={() =>
+                  onEditTrigger(data.id, "Ville", data.Ville)
+                }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "Ville", data.Ville) ? (
+                {isTriggered(data.ad_id, "Ville", data.Ville) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -1099,11 +1111,11 @@ export function LeadTable() {
               {/* utm_device */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "utm_device", data.utm_device)
+                  onEditTrigger(data.id, "utm_device", data.utm_device)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "utm_device", data.utm_device) ? (
+                {isTriggered(data.ad_id, "utm_device", data.utm_device) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -1126,11 +1138,11 @@ export function LeadTable() {
               {/* lead_device */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "lead_device", data.lead_device)
+                  onEditTrigger(data.id, "lead_device", data.lead_device)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "lead_device", data.lead_device) ? (
+                {isTriggered(data.ad_id, "lead_device", data.lead_device) ? (
                   <EditForm
                     formtype="input"
                     formData={{
@@ -1154,7 +1166,7 @@ export function LeadTable() {
               <TableCell
                 onDoubleClick={() =>
                   onEditTrigger(
-                    rowID,
+                    data.id,
                     "operateur_mobile",
                     data.operateur_mobile
                   )
@@ -1162,7 +1174,7 @@ export function LeadTable() {
                 className="hover:text-muted-foreground"
               >
                 {isTriggered(
-                  rowID,
+                  data.id,
                   "operateur_mobile",
                   data.operateur_mobile
                 ) ? (
@@ -1188,11 +1200,11 @@ export function LeadTable() {
               {/* is_internal */}
               <TableCell
                 onDoubleClick={() =>
-                  onEditTrigger(rowID, "is_internal", data.is_internal)
+                  onEditTrigger(data.id, "is_internal", data.is_internal)
                 }
                 className="hover:text-muted-foreground"
               >
-                {isTriggered(rowID, "is_internal", data.is_internal) ? (
+                {isTriggered(data.ad_id, "is_internal", data.is_internal) ? (
                   <EditForm
                     formtype="select"
                     formData={{

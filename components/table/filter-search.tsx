@@ -114,7 +114,7 @@ export default function FilterSearch({ onRemove }: TProps) {
     }, 300); // 300ms debounce
 
     return () => clearTimeout(delayDebounce); // Cleanup
-  }, [leadData, searchKey, searchTerm]);
+  }, [leadData.asArray, filteredLeadData?.asArray, searchKey, searchTerm]);
 
   return (
     <div>
