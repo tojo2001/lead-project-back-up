@@ -18,6 +18,10 @@ import { cn } from "@/lib/utils";
 import toastify from "@/utils/toastify";
 import { Checkbox } from "../ui/checkbox";
 
+type TProps = {
+  isTableExtratContentShown: boolean;
+};
+
 type EitLocation = {
   leadID: string;
   leadKey: string;
@@ -234,7 +238,7 @@ const dataTableHeader = [
   },
 ];
 
-export function LeadTable() {
+export function LeadTable({ isTableExtratContentShown }: TProps) {
   const {
     setLead,
     removeLead,
@@ -362,10 +366,12 @@ export function LeadTable() {
         </div>
       )}
       <Table>
-        <TableCaption className="flex items-center justify-between fixed top-[-4.5rem] left-0 right-0 px-3 w-full">
-          <FilterSearch onRemove={onRemove} />
-          {count} Lead(s) in total
-        </TableCaption>
+        {isTableExtratContentShown && (
+          <TableCaption className="flex items-center justify-between fixed top-[-4.5rem] left-0 right-0 px-3 w-full">
+            <FilterSearch onRemove={onRemove} />
+            {count} Lead(s) in total
+          </TableCaption>
+        )}
 
         <TableHeader className="sticky top-0 left-0 right-0 bg-background">
           <TableRow>

@@ -113,19 +113,26 @@ export default function LeadForm() {
         </div>
 
         <div className="flex items-center space-x-2">
-          <Preview
-            closeBtnRef={closeBtnRef}
+          <TableSection
+            isOnPreview={isOnPreview}
             isProcessing={isProcessing}
-            previewStep={1}
-          >
-            <Button
-              type="submit"
-              ref={btnRef}
-              disabled={!section || !clientkey || !leads || !isUpdated}
+            disabled={!section || !clientkey || !leads || !isUpdated}
+          />
+          {/* {isOnPreview && (
+            <Preview
+              closeBtnRef={closeBtnRef}
+              isProcessing={isProcessing}
+              previewStep={1}
             >
-              {isOnPreview ? "Preview" : "Processe"}
-            </Button>
-          </Preview>
+              <Button
+                type="submit"
+                ref={btnRef}
+                disabled={!section || !clientkey || !leads || !isUpdated}
+              >
+                Classic Preview
+              </Button>
+            </Preview>
+          )} */}
 
           {!!section && !!clientkey && !!leads && (
             <Button
@@ -139,12 +146,6 @@ export default function LeadForm() {
           )}
         </div>
       </form>
-
-      {leadData.asArray?.length! > 0 && (
-        <div className="fixed bottom-2 left-1/2 -translate-x-1/2">
-          <TableSection />
-        </div>
-      )}
     </div>
   );
 }
