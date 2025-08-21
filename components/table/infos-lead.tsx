@@ -42,7 +42,8 @@ const leadKeys = {
 
 export default function InfosLead({ children }: TProps) {
   const { leadData, filteredLeadData } = useLeadStore();
-  const [groupKey, setGroupKey] = useState<keyof IDataContact>("platform");
+  const [groupKey, setGroupKey] =
+    useState<keyof IDataContact>("Fournisseur_actuel");
   const [isCopy, setIsCopy] = useState<boolean>(false);
   const [groupResults, setGroupResults] = useState<Record<
     string,
@@ -89,7 +90,7 @@ export default function InfosLead({ children }: TProps) {
   }, [leads, groupKey]);
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={(open) => open && setGroupKey("Fournisseur_actuel")}>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
       <DialogContent>
@@ -103,7 +104,7 @@ export default function InfosLead({ children }: TProps) {
         <div className="w-full space-y-4">
           <Select onValueChange={onKeyChange}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Platform" />
+              <SelectValue placeholder="Fournisseur_actuel" />
             </SelectTrigger>
             <SelectContent className="max-h-[17rem] h-full left-[11rem] -top-12">
               <SelectGroup>

@@ -2,14 +2,18 @@
 
 import { UPDATE_KEY } from "@/constant/constant";
 import { useUpdateChecker } from "@/hooks/use-update-checker";
+import { cn } from "@/lib/utils";
 import { AlertCircle, RefreshCcw } from "lucide-react";
+import { useState } from "react";
 
 export default function UpdateIndicatorBanner() {
   const { isUpdated, newVersionKey } = useUpdateChecker();
+  const [isUpdating, setIsUpdating] = useState(false);
 
   if (isUpdated == null) return null;
 
   const onReload = () => {
+    setIsUpdating(true);
     localStorage.setItem(UPDATE_KEY, newVersionKey!);
     location.reload();
   };
@@ -26,7 +30,7 @@ export default function UpdateIndicatorBanner() {
         onClick={onReload}
         className="flex items-center gap-2 bg-yellow-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-yellow-700 transition"
       >
-        <RefreshCcw className="w-4 h-4" />
+        <RefreshCcw className={cn("w-4 h-4", isUpdating && "animate-spin")} />
         Reload
       </button>
     </div>
