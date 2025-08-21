@@ -373,11 +373,10 @@ export function LeadTable({ isTableExtratContentShown }: TProps) {
             <FilterSearch onRemove={onRemove} />
             <div className="text-end">
               <h2 className="font-bold">{count} Lead(s) in total</h2>
-              <span className="text-xs italic text-muted-foreground/50">
-                (A total of <span className="font-bold">{count}</span> lead
-                {count > 1 ? "s" : ""} have been transferred from the{" "}
-                <span className="font-bold underline">{client}</span> type to
-                the MERE type.)
+              <span className="text-xs text-muted-foreground/50">
+                (<span className="font-bold">{count}</span> lead
+                {count > 1 ? "s" : ""} were moved from{" "}
+                <span className="font-bold underline">{client}</span> to MERE)
               </span>
             </div>
           </TableCaption>

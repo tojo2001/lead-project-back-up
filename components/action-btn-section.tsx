@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { useLeadStore } from "@/store/use-lead.store";
-import { Phone, ScrollText, Send } from "lucide-react";
+import { Info, Phone, ScrollText, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Preview from "./preview/preview";
+import InfosLead from "./table/infos-lead";
 
 type TPros = {
   hasthirdAction?: boolean;
@@ -73,16 +74,32 @@ export default function ActionBtnSection({
       </Button>
 
       {hasthirdAction && !filteredLeadData && (
-        <Preview closeBtnRef={closeBtnRef} isProcessing={false} previewStep={2}>
-          <Button
-            ref={btnRef}
-            className="flex items-center justify-center group"
-            variant="destructive"
+        <>
+          <InfosLead>
+            <Button
+              ref={btnRef}
+              className="flex items-center justify-center group"
+            >
+              <Info size={20} className="block group-hover:hidden" />
+              <span className="hidden group-hover:block">Infos leads</span>
+            </Button>
+          </InfosLead>
+
+          <Preview
+            closeBtnRef={closeBtnRef}
+            isProcessing={false}
+            previewStep={2}
           >
-            <Send size={20} className="block group-hover:hidden" />
-            <span className="hidden group-hover:block">Continue to Push</span>
-          </Button>
-        </Preview>
+            <Button
+              ref={btnRef}
+              className="flex items-center justify-center group"
+              variant="destructive"
+            >
+              <Send size={20} className="block group-hover:hidden" />
+              <span className="hidden group-hover:block">Continue to Push</span>
+            </Button>
+          </Preview>
+        </>
       )}
     </div>
   );
