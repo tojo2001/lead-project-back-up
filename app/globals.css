@@ -32,6 +32,10 @@
   background: #555;
 }
 
+.fixed.inset-0.z-50.bg-black\/80 {
+  backdrop-filter: blur(2px) !important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

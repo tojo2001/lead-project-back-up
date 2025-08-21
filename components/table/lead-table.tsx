@@ -17,6 +17,7 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import toastify from "@/utils/toastify";
 import { Checkbox } from "../ui/checkbox";
+import { useClientStore } from "@/store/use-client.store";
 
 type TProps = {
   isTableExtratContentShown: boolean;
@@ -239,6 +240,7 @@ const dataTableHeader = [
 ];
 
 export function LeadTable({ isTableExtratContentShown }: TProps) {
+  const { client } = useClientStore();
   const {
     setLead,
     removeLead,
@@ -369,7 +371,15 @@ export function LeadTable({ isTableExtratContentShown }: TProps) {
         {isTableExtratContentShown && (
           <TableCaption className="flex items-center justify-between fixed top-[-4.5rem] left-0 right-0 px-3 w-full">
             <FilterSearch onRemove={onRemove} />
-            {count} Lead(s) in total
+            <div className="text-end">
+              <h2 className="font-bold">{count} Lead(s) in total</h2>
+              <span className="text-xs italic text-muted-foreground/50">
+                (A total of <span className="font-bold">{count}</span> lead
+                {count > 1 ? "s" : ""} have been transferred from the{" "}
+                <span className="font-bold underline">{client}</span> type to
+                the MERE type.)
+              </span>
+            </div>
           </TableCaption>
         )}
 
