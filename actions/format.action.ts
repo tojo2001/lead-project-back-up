@@ -194,6 +194,11 @@ export async function formatAction(
           mapColumnFn?.[section].mapColumnPURPREMIUM(lead.split(LEAD_SEPARATOR))
         );
 
+      case "PRATIPS":
+        return leadsArray.map((lead) =>
+          mapColumnFn?.[section].mapColumnPRAPTIPS(lead.split(LEAD_SEPARATOR))
+        );
+
       case "VIPP FREE":
         return leadsArray.map((lead) =>
           mapColumnFn?.[section].mapColumnVIPPFREE(lead.split(LEAD_SEPARATOR))

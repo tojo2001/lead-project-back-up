@@ -143,6 +143,10 @@ export const CLIENTS: {
         key: "PUREPREMIUM",
       },
       {
+        name: "PRATIPS",
+        key: "PRATIPS",
+      },
+      {
         name: "VIPP FREE",
         key: "VIPP FREE",
       },
