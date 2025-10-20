@@ -82,3 +82,18 @@ interface IDataContact {
 }
 
 type TMere = "mere1" | "mere2" | "mere3";
+
+interface IDateParts {
+  year: number;
+  month: number;
+  day: number;
+  hour: number;
+  minute: number;
+  second: number;
+  millisecond: number;
+}
+
+interface IDateRange {
+  startDate: DateParts;
+  endDate: DateParts;
+}
