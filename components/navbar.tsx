@@ -21,7 +21,7 @@ export default function Navbar() {
           <Layers2 size="16" />
           <p>Stock Flow</p>
         </Link>
-        {/* {!IS_ON_PROD && <PushUpdateBtn />} */}
+        {!IS_ON_PROD && <PushUpdateBtn />}
         <SignedIn>
           <UserButton />
         </SignedIn>

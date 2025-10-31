@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -50,8 +50,11 @@ export default function InfosLead({ children }: TProps) {
     number
   > | null>(null);
 
-  const leads =
-    (!!filteredLeadData ? filteredLeadData.asArray : leadData.asArray) || [];
+  const leads = useMemo(() => {
+    return (
+      (!!filteredLeadData ? filteredLeadData.asArray : leadData.asArray) || []
+    );
+  }, [filteredLeadData, leadData]);
 
   const groupByField = <T extends keyof IDataContact>(
     data: IDataContact[],

@@ -1,12 +1,16 @@
 "use client";
 
+import { useState, useEffect, RefObject } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useLeadQueryStore } from "@/store/use-lead-query.store";
 
-type TProps = { setDateRange: Dispatch<SetStateAction<IDateRange | null>> };
+type TProps = {
+  dateRangeResetBtnRef: RefObject<HTMLButtonElement>;
+};
 
-export function DateRange({ setDateRange }: TProps) {
+export default function DateRange({ dateRangeResetBtnRef }: TProps) {
+  const { setDateRange, resetDateRange } = useLeadQueryStore();
   const [startDateTime, setStartDateTime] = useState<Date | null>(null);
   const [endDateTime, setEndDateTime] = useState<Date | null>(null);
 
@@ -36,7 +40,7 @@ export function DateRange({ setDateRange }: TProps) {
     });
   };
 
-  const extractParts = (date: Date | null) => {
+  const extractParts = (date: Date | null, isStart: boolean) => {
     if (!date) return null;
     return {
       year: date.getFullYear(),
@@ -44,83 +48,104 @@ export function DateRange({ setDateRange }: TProps) {
       day: date.getDate(),
       hour: date.getHours(),
       minute: date.getMinutes(),
-      second: date.getSeconds(),
-      millisecond: date.getMilliseconds(),
+      second: isStart ? 0 : date.getSeconds(),
+      millisecond: isStart ? 0 : date.getMilliseconds(),
+      timezone: "Europe/Paris",
     };
   };
 
-  const handleValidate = () => {
-    const start = extractParts(startDateTime);
-    const end = extractParts(endDateTime);
+  // ? Automatically set date range when both start & end are filled
+  useEffect(() => {
+    if (startDateTime && endDateTime) {
+      const start = extractParts(startDateTime, true);
+      const end = extractParts(endDateTime, false);
+      if (start && end) {
+        setDateRange({ $dateFromParts: start }, { $dateFromParts: end });
+      }
+    }
+  }, [startDateTime, endDateTime, setDateRange]);
 
-    setDateRange(start && end ? { startDate: start, endDate: end } : null);
+  const clearDateRange = () => {
+    setStartDateTime(null);
+    setEndDateTime(null);
+    resetDateRange();
   };
 
-  // values
   const startDateValue = startDateTime
-    ? startDateTime.toISOString().slice(0, 10)
+    ? startDateTime.toLocaleDateString("en-CA")
     : "";
   const startTimeValue = startDateTime
     ? startDateTime.toTimeString().slice(0, 5)
     : "";
   const endDateValue = endDateTime
-    ? endDateTime.toISOString().slice(0, 10)
+    ? endDateTime.toLocaleDateString("en-CA")
     : "";
   const endTimeValue = endDateTime
     ? endDateTime.toTimeString().slice(0, 5)
     : "";
 
   return (
-    <div className="flex items-center justify-center gap-12 mb-6">
-      {/* START DATE */}
-      <div>
-        <p className="mb-2">Start date</p>
-        <div className="flex items-center justify-center space-x-2">
-          <Input
-            type="date"
-            value={startDateValue}
-            onChange={(e) => handleChange("date", e.target.value, true)}
-          />
-          <Input
-            type="time"
-            value={startTimeValue}
-            onChange={(e) => handleChange("time", e.target.value, true)}
-          />
+    <>
+      <div className="space-y-2">
+        {/* START DATE */}
+        <div className="">
+          <p className="text-sm">Start date</p>
+          <div className="flex items-center justify-center space-x-2">
+            <Input
+              type="date"
+              value={startDateValue}
+              onChange={(e) => handleChange("date", e.target.value, true)}
+            />
+            <Input
+              type="time"
+              value={startTimeValue}
+              onChange={(e) => handleChange("time", e.target.value, true)}
+            />
+          </div>
         </div>
-        <p className="mt-2 text-sm text-gray-500">
-          Selected: {startDateTime?.toLocaleString() || "none"}
-        </p>
+
+        {/* END DATE */}
+        <div className="">
+          <p className="text-sm">End date</p>
+          <div className="flex items-center justify-center space-x-2">
+            <Input
+              type="date"
+              value={endDateValue}
+              onChange={(e) => handleChange("date", e.target.value, false)}
+            />
+            <Input
+              type="time"
+              value={endTimeValue}
+              onChange={(e) => handleChange("time", e.target.value, false)}
+            />
+          </div>
+        </div>
       </div>
 
-      {/* END DATE */}
-      <div>
-        <p className="mb-2">End date</p>
-        <div className="flex items-center justify-center space-x-2">
-          <Input
-            type="date"
-            value={endDateValue}
-            onChange={(e) => handleChange("date", e.target.value, false)}
-          />
-          <Input
-            type="time"
-            value={endTimeValue}
-            onChange={(e) => handleChange("time", e.target.value, false)}
-          />
-        </div>
-        <p className="mt-2 text-sm text-gray-500">
-          Selected: {endDateTime?.toLocaleString() || "none"}
-        </p>
-      </div>
-
-      {/* VALIDATE BUTTON */}
-      <div className="flex flex-col justify-end">
+      {/* ACTIONS */}
+      <div className="flex items-center space-x-2">
         <Button
-          onClick={handleValidate}
-          disabled={!startDateTime || !endDateTime}
+          ref={dateRangeResetBtnRef}
+          variant="link"
+          className="text-destructive underline"
+          onClick={clearDateRange}
+          disabled={!startDateTime && !endDateTime}
         >
-          Validate
+          Reset Range
+        </Button>
+
+        {/* Optional quick-set button */}
+        <Button
+          variant="link"
+          className="text-blue-600 underline"
+          onClick={() => {
+            const now = new Date();
+            setEndDateTime(now);
+          }}
+        >
+          Set to Current
         </Button>
       </div>
-    </div>
+    </>
   );
 }

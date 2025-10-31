@@ -83,17 +83,28 @@ interface IDataContact {
 
 type TMere = "mere1" | "mere2" | "mere3";
 
-interface IDateParts {
-  year: number;
-  month: number;
-  day: number;
-  hour: number;
-  minute: number;
-  second: number;
-  millisecond: number;
-}
+type MatchCondition =
+  | RegExp
+  | string
+  | number
+  | boolean
+  | {
+      $eq?: string | number | boolean | RegExp;
+      $ne?: string | number | boolean | RegExp;
+      $not?: RegExp | Record<string, any>;
+      $in?: (string | number)[];
+      $nin?: (string | number)[];
+      [key: string]: any; // allow any other MongoDB operator
+    };
 
-interface IDateRange {
-  startDate: DateParts;
-  endDate: DateParts;
-}
+type TAggregation = {
+  $match: Record<string, MatchCondition>;
+};
+
+type TOutPutResult = {
+  requestURI: string | null;
+  results: {
+    ID: string;
+    LEADS: string;
+  }[];
+};

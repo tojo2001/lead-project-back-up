@@ -114,6 +114,7 @@ export default function FilterSearch({ onRemove }: TProps) {
     }, 300); // 300ms debounce
 
     return () => clearTimeout(delayDebounce); // Cleanup
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [leadData.asArray, filteredLeadData?.asArray, searchKey, searchTerm]);
 
   return (

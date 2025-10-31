@@ -1,24 +1,27 @@
 import { MongoClient } from "mongodb";
 
 const uri = process.env.MONGODB_URI!;
-const options = {};
+if (!uri) throw new Error("Please add your MongoDB URI to .env.local");
+
+// ?? Increase connection + socket timeouts here
+const options = {
+  connectTimeoutMS: 30000, // 30s to establish connection
+  socketTimeoutMS: 120000, // 2min to keep socket alive waiting for response
+  maxPoolSize: 10, // optional: number of connections in pool
+};
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
-if (!process.env.MONGODB_URI) {
-  throw new Error("Please add your MongoDB URI to .env.local");
-}
-
 if (process.env.NODE_ENV === "development") {
-  // In dev mode, use a global var so we don't reconnect every time Next.js reloads
+  // In dev mode, reuse the global connection to prevent hot-reload reconnects
   if (!(global as any)._mongoClientPromise) {
     client = new MongoClient(uri, options);
     (global as any)._mongoClientPromise = client.connect();
   }
   clientPromise = (global as any)._mongoClientPromise;
 } else {
-  // In prod, just create a new client
+  // In prod, always create a new client
   client = new MongoClient(uri, options);
   clientPromise = client.connect();
 }

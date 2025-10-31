@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
+import { TDateRange } from "@/store/use-lead-query.store";
+import { safeParse } from "@/utils/get-safe-object";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -9,6 +11,7 @@ export async function GET(req: Request) {
   const entity_id = searchParams.get("entity_id");
   const campaign_setting_id = searchParams.get("campaign_setting_id");
   const date_range = searchParams.get("date_range");
+  const aggregation = searchParams.get("aggregation");
 
   if (!dbId || !entity_id || !campaign_setting_id) {
     return NextResponse.json(
@@ -17,21 +20,23 @@ export async function GET(req: Request) {
     );
   }
 
-  const dateRangeFormated: IDateRange = date_range
-    ? JSON.parse(date_range)
+  const requestURI = req.url;
+
+  const dateRangeFormated: TDateRange = date_range
+    ? safeParse(date_range)
     : null;
+
+  const aggregationFormated: TAggregation = aggregation
+    ? safeParse(aggregation)
+    : {};
+
+  // console.log(dateRangeFormated);
+  // console.log(aggregationFormated);
 
   // get date range filter
   function getDateRange() {
     if (dateRangeFormated) {
-      return {
-        startDate: {
-          $dateFromParts: { ...dateRangeFormated.startDate },
-        },
-        endDate: {
-          $dateFromParts: { ...dateRangeFormated.endDate },
-        },
-      };
+      return dateRangeFormated;
     }
 
     return {
@@ -53,67 +58,70 @@ export async function GET(req: Request) {
   const client = await clientPromise;
   const db = client.db(dbId);
 
-  const leads = await db
-    .collection(collection)
-    .aggregate([
-      {
-        $match: {
-          EntityId: new ObjectId(entity_id),
-          CampaignSettingId: new ObjectId(campaign_setting_id),
+  const pipeline = [
+    {
+      $match: {
+        EntityId: new ObjectId(entity_id),
+        CampaignSettingId: new ObjectId(campaign_setting_id),
+      },
+    },
+    {
+      $addFields: getDateRange(),
+    },
+    {
+      $unwind: {
+        path: "$ContactBroadcasts",
+        preserveNullAndEmptyArrays: false,
+      },
+    },
+    {
+      $match: { "ContactBroadcasts.BroadcastType": { $in: ["LEADSSTOCK"] } },
+    },
+    {
+      $unwind: {
+        path: "$ContactBroadcasts.BroadcastResults",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $match: {
+        "ContactBroadcasts.BroadcastResults.BroadcastResultStatus": {
+          $nin: ["LEADS_CANCELLED"],
         },
       },
-      {
-        $addFields: getDateRange(),
-      },
-      {
-        $unwind: {
-          path: "$ContactBroadcasts",
-          preserveNullAndEmptyArrays: false,
-        },
-      },
-      {
-        $match: { "ContactBroadcasts.BroadcastType": { $in: ["LEADSSTOCK"] } },
-      },
-      {
-        $unwind: {
-          path: "$ContactBroadcasts.BroadcastResults",
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $match: {
-          "ContactBroadcasts.BroadcastResults.BroadcastResultStatus": {
-            $nin: ["LEADS_CANCELLED"],
+    },
+    {
+      $match: {
+        $and: [
+          {
+            $expr: {
+              $gte: ["$ContactIntegration.EventDateTime", "$startDate"],
+            },
           },
-        },
-      },
-      {
-        $match: {
-          $and: [
-            {
-              $expr: {
-                $gte: ["$ContactIntegration.EventDateTime", "$startDate"],
-              },
+          {
+            $expr: {
+              $lte: ["$ContactIntegration.EventDateTime", "$endDate"],
             },
-            {
-              $expr: {
-                $lte: ["$ContactIntegration.EventDateTime", "$endDate"],
-              },
-            },
-            { "ContactBroadcasts.PlatformBroadcastingDateTime": { $eq: null } },
-          ],
-        },
+          },
+          { "ContactBroadcasts.PlatformBroadcastingDateTime": { $eq: null } },
+        ],
       },
-      {
-        $addFields: {
-          INTEGRATION_ID: "$_id",
-          LEADS: "$ContactIntegration.MetasString",
-        },
+    },
+    {
+      $addFields: {
+        ID: "$_id",
+        LEADS: "$ContactIntegration.MetasString",
+        platform: "$ContactIntegration.MetadataIntegration.platform",
       },
-      { $project: { _id: 0, LEADS: 1, INTEGRATION_ID: 1 } },
-      { $limit: 1000 },
-    ])
-    .toArray();
+    },
+    {
+      $match: aggregationFormated.$match ?? {},
+    },
+    { $project: { _id: 0, ID: "$ID", LEADS: "$LEADS" } },
+    { $limit: 1000 },
+  ];
 
-  return NextResponse.json({ leads });
+  const results = await db.collection(collection).aggregate(pipeline).toArray();
+
+  return NextResponse.json({ requestURI, results });
 }
