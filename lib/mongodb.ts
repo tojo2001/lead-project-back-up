@@ -5,7 +5,7 @@ if (!uri) throw new Error("Please add your MongoDB URI to .env.local");
 
 // ?? Increase connection + socket timeouts here
 const options = {
-  connectTimeoutMS: 30000, // 30s to establish connection
+  connectTimeoutMS: 120000, // 2min to establish connection
   socketTimeoutMS: 120000, // 2min to keep socket alive waiting for response
   maxPoolSize: 10, // optional: number of connections in pool
 };
